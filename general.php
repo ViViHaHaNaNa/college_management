@@ -84,28 +84,55 @@ body{
 
 .grid{
     width:50%;
-    margin:50px auto;
-    display:flex;
-    flex-direction:column;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:1fr; /* 🔥 stack vertically */
     gap:25px;
 }
 
-.box{
-    padding:35px;
-    border-radius:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
-    color:white;
+.box span{
+    position:relative;
+    z-index:2;
+    color:black;
 }
 
-.box:hover{transform:scale(1.03);}
+.box:hover{
+    transform:scale(1.03);
+}
 
-.email{background:#3f51b5;}
-.signature{background:#009688;}
-.smart{background:#ff9800;}
+.box{
+    height:220px; /* same as dashboard */
+    border-radius:12px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:26px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.notice{
+    background: url('assets/images/mail.jpg') center/cover no-repeat;
+}
+
+.guest{
+    background: url('assets/images/signature.jpg') center/cover no-repeat;
+}
+
+.arrange{
+    background: url('assets/images/arrangement.webpg') center/cover no-repeat;
+}
 
 .status-container{
     width:60%;
@@ -160,11 +187,27 @@ body{
 <p>Select a category to submit a request</p>
 </div>
 
-<div class="grid">
+<!-- <div class="grid">
 
 <a href="mass_email.php"><div class="box email">Mass Email</div></a>
 <a href="digital_signature.php"><div class="box signature">Digital Signature</div></a>
 <a href="smartboard.php"><div class="box smart">Smartboard Usage</div></a>
+
+</div> -->
+
+<div class="grid">
+
+<a href="mass_email.php">
+<div class="box notice"></div>
+</a>
+
+<a href="digital_signature.php">
+<div class="box guest"></div>
+</a>
+
+<a href="smartboard.php">
+<div class="box arrange"></div>
+</a>
 
 </div>
 

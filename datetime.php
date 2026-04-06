@@ -70,32 +70,72 @@ body{font-family: Arial;margin:0;background:#f2f2f2;}
 
 .header a{color:white;text-decoration:none;margin-left:20px;}
 
+a{
+    text-decoration:none;
+}
 .title{text-align:center;margin-top:40px;}
 
 .grid{
-    width:50%;
-    margin:50px auto;
-    display:flex;
-    flex-direction:column;
+    width:75%;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:1fr; /* 🔥 stack vertically */
     gap:25px;
 }
 
-.box{
-    padding:35px;
-    border-radius:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
-    color:white;
+.box span{
+    position:relative;
+    z-index:2;
+    color:white; /* 🔥 important */
+}
+.box:hover{
+    transform:scale(1.03);
 }
 
-.box:hover{transform:scale(1.03);}
+.box::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.45); /* 🔥 overlay */
+    z-index:1;
+}
 
-.booking{background:#3f51b5;}
-.area{background:#009688;}
-.special{background:#ff9800;}
+.box{
+    height:220px; /* same as dashboard */
+    border-radius:12px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:26px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.notice{
+    background: url('assets/images/classroom.jpg') center/cover no-repeat;
+}
+
+.guest{
+    background: url('assets/images/refuge.jpeg') center/cover no-repeat;
+}
+
+.arrange{
+    background: url('assets/images/special.jpeg') center/cover no-repeat;
+}
 
 .status-container{
     width:60%;
@@ -150,28 +190,31 @@ body{font-family: Arial;margin:0;background:#f2f2f2;}
 <p>Submit permissions for areas and special events</p>
 </div>
 
+
+
+<div class="grid">
+
 <div class="grid">
 
 <a href="book.php">
-<div class="box booking">
-Normal Space Booking<br>
-(Mini Auditorium / Seminar Hall / Classrooms / Labs)
-</div>
+    <div class="box notice">
+        <span>Classroom Booking</span>
+    </div>
 </a>
 
 <a href="area_usage.php">
-<div class="box area">
-Area Usage<br>
-(Refugee / Entrance / Canopy)
-</div>
+    <div class="box guest">
+        <span>Area Usage</span>
+    </div>
 </a>
 
 <a href="special_event.php">
-<div class="box special">
-Special Event Permission<br>
-(Late Night / Loud Event / Large Crowd)
-</div>
+    <div class="box arrange">
+        <span>Special Event</span>
+    </div>
 </a>
+
+</div>
 
 </div>
 

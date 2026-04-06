@@ -78,6 +78,9 @@ body{
     text-decoration:none;
     margin-left:20px;
 }
+a{
+    text-decoration:none;
+}
 
 .title{
     text-align:center;
@@ -89,14 +92,14 @@ body{
 }
 
 .grid{
-    width:75%;
+    width:50%;
     margin:40px auto;
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:30px;
+    grid-template-columns:1fr; /* 🔥 stack vertically */
+    gap:25px;
 }
 
-.box::before{
+/* .box::before{
     content:"";
     position:absolute;
     top:0;
@@ -105,17 +108,22 @@ body{
     height:100%;
     background:rgba(0,0,0,0.45);
     z-index:1;
-}
+} */
 
 .box span{
     position:relative;
     z-index:2;
+    color:black;
+}
+
+.box:hover{
+    transform:scale(1.03);
 }
 
 .box{
-    height:220px; /* 🔥 same as dashboard */
+    height:220px; /* same as dashboard */
     border-radius:12px;
-    
+
     display:flex;
     justify-content:center;
     align-items:center;
@@ -134,20 +142,17 @@ body{
     overflow:hidden;
 }
 
-.box:hover{
-    transform:scale(1.05);
-}
 
 .notice{
-    background: url('assets/images/guest.png') center/cover no-repeat;
+    background: url('assets/images/noticeboard.jpg') center/cover no-repeat;
 }
 
 .guest{
-    background: url('assets/images/guest.jpg') center/cover no-repeat;
+    background: url('assets/images/guest.png') center/cover no-repeat;
 }
 
 .arrange{
-    background: url('assets/images/arrangement.jpg') center/cover no-repeat;
+    background: url('assets/images/arrangement.webp') center/cover no-repeat;
 }
 
 .status-container{
@@ -206,15 +211,15 @@ body{
 <div class="grid">
 
 <a href="notice_board.php">
-<div class="box notice"><span>Notice Board / Standee Usage</span></div>
+<div class="box notice"></div>
 </a>
 
 <a href="guest_invitation.php">
-<div class="box guest">Guest Invitation</div>
+<div class="box guest"></div>
 </a>
 
 <a href="arrangement_request.php">
-<div class="box arrange">Arrangement Requirement</div>
+<div class="box arrange"></div>
 </a>
 
 </div>
