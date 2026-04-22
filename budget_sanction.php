@@ -13,6 +13,26 @@ $resubmit_id = $_GET['id'] ?? null;
 $success = "";
 $error = "";
 
+function deleteOldFilesAndDocs($conn, $table, $column, $id){
+
+    // Get existing files
+    $stmt = $conn->prepare("SELECT file_path FROM $table WHERE $column = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while($row = $result->fetch_assoc()){
+        if(file_exists($row['file_path'])){
+            unlink($row['file_path']); // delete file from server
+        }
+    }
+
+    // Delete DB records
+    $stmt = $conn->prepare("DELETE FROM $table WHERE $column = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $committee_id = $_SESSION['committee_id'];
@@ -30,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare("
             UPDATE paperwork
             SET status='pending',
+                admin_status=NULL,
+                forwarded_to_admin=0,
                 rejection_reason=NULL,
                 uploaded_at=NOW()
             WHERE paperwork_id = ?

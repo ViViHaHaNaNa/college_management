@@ -10,19 +10,20 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'committee') {
 $committee_id = $_SESSION['committee_id'];
 
 $stmt = $conn->prepare("
-SELECT paperwork_id, type, status, uploaded_at, rejection_reason,
-       forwarded_to_admin, admin_status
-FROM paperwork
-WHERE committee_id = ?
-AND uploaded_at = (
-    SELECT MAX(uploaded_at)
+SELECT *
+FROM paperwork p1
+WHERE p1.committee_id = ?
+AND p1.paperwork_id = (
+    SELECT p2.paperwork_id
     FROM paperwork p2
-    WHERE p2.type = paperwork.type
+    WHERE p2.type = p1.type
     AND p2.committee_id = ?
+    ORDER BY p2.uploaded_at DESC
+    LIMIT 1
 )
 ");
 
-$stmt->bind_param("ss",$committee_id,$committee_id);
+$stmt->bind_param("ii",$committee_id,$committee_id);
 $stmt->execute();
 $result = $stmt->get_result();
 

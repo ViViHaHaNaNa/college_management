@@ -210,7 +210,7 @@ $spaces = $conn->query("SELECT id, name FROM spaces ORDER BY name ASC");
     <h2 class="mb-4 text-center">Admin Dashboard</h2>
 
 <!-- ================= COMMITTEE CARDS ================= -->
-<h3 class="mb-4">Committees</h3>
+<h3 class="mb-4">Committee paperwork</h3>
 
 
 

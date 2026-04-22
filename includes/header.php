@@ -54,6 +54,7 @@ if (isset($_SESSION['user_id'])) {
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="assets/css/styles.css">
+<!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
 <style>
 
