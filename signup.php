@@ -111,106 +111,105 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<div class="container mt-5">
-<h2 class="mb-4 text-center">Sign Up</h2>
+<div class="container mt-5 pt-24">
 
-<?php if (!empty($error)) : ?>
-<div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-<?php endif; ?>
+    <?php if (!empty($error)) : ?>
+    <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
 
-<form method="POST" class="mx-auto" style="max-width: 400px;" onsubmit="return validateSignupForm()">
+    <form method="POST" class="mx-auto" style="max-width: 400px;" onsubmit="return validateSignupForm()">
 
-<div class="row">
-<div class="col-md-6 mb-3">
-<label class="form-label">First Name</label>
-<input type="text" name="first_name" class="form-control" pattern="[A-Za-z]+" required>
-</div>
+    <div class="row">
+    <div class="col-md-6 mb-3">
+    <label class="form-label">First Name</label>
+    <input type="text" name="first_name" class="form-control" pattern="[A-Za-z]+" required>
+    </div>
 
-<div class="col-md-6 mb-3">
-<label class="form-label">Last Name</label>
-<input type="text" name="last_name" class="form-control" pattern="[A-Za-z]+" required>
-</div>
-</div>
+    <div class="col-md-6 mb-3">
+    <label class="form-label">Last Name</label>
+    <input type="text" name="last_name" class="form-control" pattern="[A-Za-z]+" required>
+    </div>
+    </div>
 
-<div class="mb-3">
-<label class="form-label">Email Address</label>
-<input type="email" name="email" class="form-control" required>
-</div>
+    <div class="mb-3">
+    <label class="form-label">Email Address</label>
+    <input type="email" name="email" class="form-control" required>
+    </div>
 
-<div class="mb-3">
-<label class="form-label">Role</label>
+    <div class="mb-3">
+    <label class="form-label">Role</label>
 
-<select name="role" id="role" class="form-select" onchange="toggleCommitteeID()">
-<option value="student">Student</option>
-<option value="admin">Admin</option>
-<option value="faculty">Faculty</option>
-<option value="committee">Committee</option>
-</select>
+    <select name="role" id="role" class="form-select" onchange="toggleCommitteeID()">
+    <option value="student">Student</option>
+    <option value="admin">Admin</option>
+    <option value="faculty">Faculty</option>
+    <option value="committee">Committee</option>
+    </select>
 
-<div id="committeeField" style="display:none;" class="py-4">
+    <div id="committeeField" style="display:none;" class="py-4">
 
-<div class="mb-3">
-<label class="form-label">Committee ID</label>
+    <div class="mb-3">
+    <label class="form-label">Committee ID</label>
 
-<select class="form-select" name="committee_id">
-<option value="">Select Committee ID</option>
+    <select class="form-select" name="committee_id">
+    <option value="">Select Committee ID</option>
 
-<?php
-$result = $conn->query("SELECT committee_id FROM committees");
+    <?php
+    $result = $conn->query("SELECT committee_id FROM committees");
 
-while($row = $result->fetch_assoc()){
-echo "<option value='".$row['committee_id']."'>".$row['committee_id']."</option>";
-}
-?>
+    while($row = $result->fetch_assoc()){
+    echo "<option value='".$row['committee_id']."'>".$row['committee_id']."</option>";
+    }
+    ?>
 
-</select>
-</div>
+    </select>
+    </div>
 
-<div class="mb-3">
-<label class="form-label">Committee Password</label>
-<input type="password" class="form-control" name="committee_password">
-</div>
+    <div class="mb-3">
+    <label class="form-label">Committee Password</label>
+    <input type="password" class="form-control" name="committee_password">
+    </div>
 
-</div>
-</div>
+    </div>
+    </div>
 
-<div class="mb-3 position-relative">
-<label class="form-label">Password</label>
+    <div class="mb-3 position-relative">
+    <label class="form-label">Password</label>
 
-<input type="password" name="password" id="password"
-class="form-control"
-required
-onfocus="showRules()"
-onblur="hideRules()"
-oninput="validatePassword()">
+    <input type="password" name="password" id="password"
+    class="form-control"
+    required
+    onfocus="showRules()"
+    onblur="hideRules()"
+    oninput="validatePassword()">
 
-<div id="passwordRules" class="card p-2 shadow-sm d-none"
-style="position:absolute; z-index:10; width:100%; margin-top:5px;">
-<small id="ruleLength" class="text-danger">❌ At least 8 characters</small><br>
-<small id="ruleUpper" class="text-danger">❌ One uppercase letter</small><br>
-<small id="ruleLower" class="text-danger">❌ One lowercase letter</small><br>
-<small id="ruleNumber" class="text-danger">❌ One number</small>
-</div>
-</div>
+    <div id="passwordRules" class="card p-2 shadow-sm d-none"
+    style="position:absolute; z-index:10; width:100%; margin-top:5px;">
+    <small id="ruleLength" class="text-danger">❌ At least 8 characters</small><br>
+    <small id="ruleUpper" class="text-danger">❌ One uppercase letter</small><br>
+    <small id="ruleLower" class="text-danger">❌ One lowercase letter</small><br>
+    <small id="ruleNumber" class="text-danger">❌ One number</small>
+    </div>
+    </div>
 
-<div class="mb-3">
-<label class="form-label">Confirm Password</label>
+    <div class="mb-3">
+    <label class="form-label">Confirm Password</label>
 
-<input type="password" name="confirm_password"
-id="confirm_password"
-class="form-control"
-required
-oninput="checkPasswordMatch()">
+    <input type="password" name="confirm_password"
+    id="confirm_password"
+    class="form-control"
+    required
+    oninput="checkPasswordMatch()">
 
-<small id="matchFeedback" class="text-danger d-none">
-Passwords do not match.
-</small>
+    <small id="matchFeedback" class="text-danger d-none">
+    Passwords do not match.
+    </small>
 
-</div>
+    </div>
 
-<button type="submit" class="btn btn-success w-100">Sign Up</button>
+    <button type="submit" class="btn btn-success w-100">Sign Up</button>
 
-</form>
+    </form>
 </div>
 
 <script>

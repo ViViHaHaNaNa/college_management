@@ -96,61 +96,166 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <style>
 
 body{
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
     margin:0;
-    background:#f2f2f2;
+    background:white;
 }
 
+/* HEADER */
+
 .header{
-    background: linear-gradient(to right,#6f1616,#a52a2a);
-    color:white;
-    padding:18px 40px;
+    background:white;
+    border-bottom:1px solid #e5e5e5;
+    padding:16px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
+.header h2{
+    margin:0;
+    font-size:18px;
+    color:#2563eb;
+    font-weight:600;
+}
+
 .header a{
-    color:white;
     text-decoration:none;
     margin-left:20px;
+    font-size:14px;
+    color:#555;
 }
+
+.header a:hover{
+    color:#2563eb;
+}
+
+/* PAGE */
 
 .page{
-    width:75%;
+    max-width:850px;
     margin:40px auto;
+    padding:0 20px;
 }
 
+/* BACK */
+
 .back-btn{
-    background:#6f1616;
-    color:white;
-    padding:8px 15px;
-    border-radius:5px;
+    display:inline-block;
+    margin-bottom:20px;
+    text-decoration:none;
+    color:#2563eb;
+    font-size:14px;
+}
+
+.back-btn:hover{
+    text-decoration:underline;
+}
+
+/* TITLE */
+
+h1{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+/* DESCRIPTION */
+
+.section{
+    background:#f9fafb;
+    padding:18px 20px;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+    margin-bottom:25px;
+}
+
+/* UPLOAD CARDS */
+
+.upload-box{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:18px;
+    background:white;
+    margin-bottom:20px;
+    transition:0.2s;
+}
+
+.upload-box:hover{
+    border-color:#2563eb;
+}
+
+/* HEADINGS */
+
+.upload-box h3{
+    margin:0 0 8px;
+    font-size:16px;
+    color:#111;
+}
+
+/* LINKS */
+
+.upload-box a{
+    font-size:13px;
+    color:#2563eb;
     text-decoration:none;
 }
 
-.section{
-    background:white;
-    padding:25px;
-    margin-top:20px;
-    border-radius:8px;
+.upload-box a:hover{
+    text-decoration:underline;
 }
 
+/* FILE AREA */
+
+.file-wrapper{
+    margin-top:12px;
+    border:1px dashed #d1d5db;
+    border-radius:10px;
+    padding:14px;
+    background:#f9fafb;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+}
+
+/* FILE INPUT */
+
+.file-wrapper input{
+    margin-top:8px;
+}
+
+/* BUTTON */
+
 button{
-    margin-top:20px;
-    padding:10px 25px;
-    background:#1e1e1e;
+    margin-top:25px;
+    padding:12px 24px;
+    background:#2563eb;
     color:white;
     border:none;
-    border-radius:5px;
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.2s;
 }
 
 button:hover{
-    background:black;
+    background:#1e4fd8;
+    transform:translateY(-1px);
 }
 
-.success{color:green;}
-.error{color:red;}
+/* MESSAGES */
+
+.success{
+    color:#16a34a;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.error{
+    color:#dc2626;
+    margin-bottom:10px;
+    font-size:14px;
+}
 
 </style>
 
@@ -176,12 +281,10 @@ button:hover{
 <h1>Event Approval Submission</h1>
 
 <div class="section">
-
 <p>
 Submit the required documents to request approval for an event.
 Faculty will review the proposal and estimated expenses before granting approval.
 </p>
-
 </div>
 
 <?php if($success) echo "<p class='success'>$success</p>"; ?>
@@ -189,7 +292,8 @@ Faculty will review the proposal and estimated expenses before granting approval
 
 <form method="POST" enctype="multipart/form-data">
 
-<div class="section">
+<!-- LETTERHEAD -->
+<div class="upload-box">
 
 <h3>Letterhead</h3>
 
@@ -197,21 +301,27 @@ Faculty will review the proposal and estimated expenses before granting approval
 Download Letterhead Format
 </a>
 
-<br><br>
-
+<div class="file-wrapper">
+Select file to upload<br>
 <input type="file" name="letterhead" required>
+</div>
 
 </div>
 
-<div class="section">
+<!-- PROPOSAL -->
+<div class="upload-box">
 
 <h3>Event Proposal</h3>
 
+<div class="file-wrapper">
+Select file to upload<br>
 <input type="file" name="proposal" required>
+</div>
 
 </div>
 
-<div class="section">
+<!-- EXPENSES -->
+<div class="upload-box">
 
 <h3>Estimated Expenses</h3>
 
@@ -219,9 +329,10 @@ Download Letterhead Format
 Download Expense Format
 </a>
 
-<br><br>
-
+<div class="file-wrapper">
+Select file to upload<br>
 <input type="file" name="expenses" required>
+</div>
 
 </div>
 

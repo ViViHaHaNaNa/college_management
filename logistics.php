@@ -46,149 +46,215 @@ $categories = [
 <title>Logistical Requests</title>
 
 <style>
-.status-text {
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 6px;
-    display: inline-block;
-}
-
-.pending { background: #fff3cd; color: #856404; }
-.forwarded { background: #d1ecf1; color: #0c5460; }
-.approved { background: #d4edda; color: #155724; }
-.rejected { background: #f8d7da; color: #721c24; }
 
 body{
     font-family: Arial, Helvetica, sans-serif;
     margin:0;
-    background:#f2f2f2;
+    background:white;
 }
 
+/* HEADER */
+
 .header{
-    background: linear-gradient(to right,#6f1616,#a52a2a);
-    color:white;
-    padding:10px 40px;
+    background:white;
+    border-bottom:1px solid #e5e5e5;
+    padding:16px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
+.header h2{
+    margin:0;
+    font-size:18px;
+    color:#2563eb;
+    font-weight:600;
+}
+
 .header a{
-    color:white;
     text-decoration:none;
     margin-left:20px;
+    font-size:14px;
+    color:#555;
 }
-a{
-    text-decoration:none;
+
+.header a:hover{
+    color:#2563eb;
 }
+
+/* TITLE */
 
 .title{
     text-align:center;
-    margin-top:40px;
+    margin-top:30px;
 }
 
 .title h1{
-    font-size:36px;
+    font-size:26px;
+    margin-bottom:5px;
 }
 
+.title p{
+    color:#666;
+    font-size:14px;
+}
+
+/* GRID (same as paperwork style) */
+
+/* GRID */
 .grid{
-    width:50%;
+    max-width:700px; /* optional: makes it look tighter */
     margin:40px auto;
     display:grid;
-    grid-template-columns:1fr; /* 🔥 stack vertically */
-    gap:25px;
+    grid-template-columns:1fr; /* ✅ THIS makes it 1x3 */
+    gap:20px;
+    padding:0 20px;
 }
 
-/* .box::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.45);
-    z-index:1;
-} */
+/* CARD */
+.grid-card{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    cursor:pointer;
+    transition:0.25s;
+    border:1px solid #eee;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
 
-.box span{
-    position:relative;
-    z-index:2;
-    color:black;
+/* ICON */
+.grid-icon{
+    width:65px;
+    height:65px;
+    object-fit:contain;
+}
+
+/* TEXT */
+.grid-card span{
+    font-size:16px;
+    font-weight:600;
+    color:#333;
+    text-align:center;
+}
+
+/* HOVER */
+.grid-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* REMOVE LINK STYLE */
+.grid a{
+    text-decoration:none;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* CARD */
+
+.box{
+    height:140px;
+    border-radius:14px;
+    background:white;
+    border:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    font-weight:600;
+    color:#333;
+    transition:0.25s;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
 .box:hover{
-    transform:scale(1.03);
+    transform:translateY(-3px);
+    border-color:#2563eb;
+    box-shadow:0 8px 18px rgba(0,0,0,0.08);
 }
 
-.box{
-    height:220px; /* same as dashboard */
-    border-radius:12px;
+/* STATUS SECTION */
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:26px;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-
-    position:relative;
-    overflow:hidden;
+.status-title{
+    text-align:center;
+    font-size:20px;
+    font-weight:600;
+    margin-top:50px;
 }
 
-
-.notice{
-    background: url('assets/images/noticeboard.jpg') center/cover no-repeat;
-}
-
-.guest{
-    background: url('assets/images/guest.png') center/cover no-repeat;
-}
-
-.arrange{
-    background: url('assets/images/arrangement.webp') center/cover no-repeat;
-}
+/* STATUS GRID */
 
 .status-container{
-    width:60%;
-    margin:40px auto;
+    max-width:900px;
+    margin:30px auto;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:15px;
+    padding:0 20px;
 }
 
+/* STATUS CARD */
+
 .status-card{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:18px;
     background:white;
-    padding:20px;
-    border-radius:8px;
-    margin-top:15px;
 }
+
+/* BADGES */
+
+.status-text{
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-left:5px;
+}
+
+.pending { background:#fff3cd; color:#856404; }
+.forwarded { background:#d1ecf1; color:#0c5460; }
+.approved { background:#d4edda; color:#155724; }
+.rejected { background:#f8d7da; color:#721c24; }
+
+/* REJECTION */
 
 .rejection-box{
     margin-top:10px;
-    padding:10px;
-    background:#fdecea;
-    border-left:4px solid red;
-    border-radius:5px;
-    color:#b71c1c;
+    padding:12px;
+    background:#fef2f2;
+    border:1px solid #fecaca;
+    border-radius:10px;
+    color:#b91c1c;
+    font-size:13px;
 }
 
+/* RESUBMIT */
+
 .resubmit-btn{
-    margin-top:10px;
-    padding:8px 15px;
-    background:#1976d2;
+    margin-top:12px;
+    padding:8px 14px;
+    background:#ef4444;
     color:white;
     border:none;
-    border-radius:5px;
+    border-radius:6px;
+    font-size:13px;
     cursor:pointer;
 }
 
 .resubmit-btn:hover{
-    background:#0d47a1;
+    background:#dc2626;
 }
+
 </style>
 
 </head>
@@ -207,25 +273,32 @@ a{
 <h1>Logistical Permissions</h1>
 <p>Select a category to submit a request</p>
 </div>
-
 <div class="grid">
 
-<a href="notice_board.php">
-<div class="box notice"></div>
-</a>
+    <a href="notice_board.php">
+        <div class="grid-card">
+            <img src="assets/images/noticeboard.png" class="grid-icon">
+            <span>Notice Board Permission</span>
+        </div>
+    </a>
 
-<a href="guest_invitation.php">
-<div class="box guest"></div>
-</a>
+    <a href="guest_invitation.php">
+        <div class="grid-card">
+            <img src="assets/images/guestinv.png" class="grid-icon">
+            <span>Guest Invitation</span>
+        </div>
+    </a>
 
-<a href="arrangement_request.php">
-<div class="box arrange"></div>
-</a>
+    <a href="arrangement_request.php">
+        <div class="grid-card">
+            <img src="assets/images/arrangereq.png" class="grid-icon">
+            <span>Arrangement Request</span>
+        </div>
+    </a>
 
 </div>
 
-
-<h2 style="text-align:center;">Request Status</h2>
+<h2 class="status-title">Request Status</h2>
 
 <div class="status-container">
 
@@ -233,15 +306,13 @@ a{
 
 <div class="status-card">
 
-<h3><?php echo $label; ?></h3>
+<h3><?= $label; ?></h3>
 
 <?php if(isset($requests[$key])): ?>
 
 <?php
 $data = $requests[$key];
-$status = $data['status'];
 
-/* 🔥 NEW FIX */
 $rejected = (
     $data['status'] == 'rejected' ||
     $data['admin_status'] == 'rejected'
@@ -270,12 +341,11 @@ elseif ($data['status'] == 'rejected') {
 ?>
 </p>
 
-<p>
+<p style="font-size:13px;color:#666;">
 <strong>Last Submitted:</strong><br>
 <?= $data['created_at']; ?>
 </p>
 
-<!-- 🔥 FIXED REJECTION REASON -->
 <?php if($rejected && !empty($data['rejection_reason'])): ?>
 <div class="rejection-box">
 <strong>Reason:</strong><br>
@@ -283,7 +353,6 @@ elseif ($data['status'] == 'rejected') {
 </div>
 <?php endif; ?>
 
-<!-- 🔥 FIXED RESUBMIT BUTTON -->
 <?php if($rejected): ?>
 
 <?php
@@ -302,7 +371,7 @@ $pageMap = [
 
 <?php else: ?>
 
-<p style="color:#777;">⚪ Not Submitted Yet</p>
+<p style="color:#999;font-size:13px;">⚪ Not Submitted Yet</p>
 
 <?php endif; ?>
 

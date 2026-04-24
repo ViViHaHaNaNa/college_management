@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<div class="container mt-5">
+<!-- <div class="container mt-5">
     <h2 class="mb-4 text-center">Login</h2>
 
     <?php if (!empty($error)) : ?>
@@ -86,6 +86,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <button type="submit" class="btn btn-primary w-100">Login</button>
     </form>
+</div> -->
+
+<!-- <head>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head> -->
+
+<div class="min-h-screen flex items-center justify-center bg-white relative">
+
+    <!-- Background glow -->
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-100 via-white to-blue-50 opacity-50 blur-3xl"></div>
+
+    <!-- Card -->
+    <div class="relative z-10 w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
+
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+
+        <?php if (!empty($error)) : ?>
+            <div class="bg-red-100 text-red-600 px-4 py-2 rounded mb-4 text-sm">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" class="space-y-5" onsubmit="return validateLoginForm()">
+
+            <!-- Email -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Email Address</label>
+                <input type="email" name="email"
+                    class="w-full px-2 py-2 rounded-l border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                    required>
+            </div>
+
+            <!-- Role -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Role</label>
+                <select name="role"
+                    class="w-full px-2 py-2 rounded-l border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                    required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="admin">Admin</option>
+                    <option value="faculty">Faculty</option>
+                    <option value="committee">Committee</option>
+                </select>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Password</label>
+                <input type="password" name="password" id="password"
+                    class="w-full px-2 py-2 rounded-2l border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none"
+                    required>
+                <p class="text-xs text-gray-500 mt-1">
+                    Must include uppercase, lowercase, number, and 8+ chars.
+                </p>
+            </div>
+
+            <!-- Button -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-500 transition">
+                Login
+            </button>
+
+        </form>
+    </div>
 </div>
 
 <script>

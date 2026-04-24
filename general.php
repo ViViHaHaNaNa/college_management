@@ -46,128 +46,182 @@ $categories = [
 <title>General Requests</title>
 
 <style>
-.status-text {
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 6px;
-    display: inline-block;
-}
-
-.pending { background: #fff3cd; color: #856404; }
-.forwarded { background: #d1ecf1; color: #0c5460; }
-.approved { background: #d4edda; color: #155724; }
-.rejected { background: #f8d7da; color: #721c24; }
 
 body{
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
     margin:0;
-    background:#f2f2f2;
+    background:white;
 }
 
+/* HEADER */
+
 .header{
-    background: linear-gradient(to right,#6f1616,#a52a2a);
-    color:white;
-    padding:10px 40px;
+    background:white;
+    border-bottom:1px solid #e5e5e5;
+    padding:16px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
+.header h2{
+    margin:0;
+    font-size:18px;
+    color:#2563eb;
+    font-weight:600;
+}
+
 .header a{
-    color:white;
     text-decoration:none;
     margin-left:20px;
+    font-size:14px;
+    color:#555;
 }
 
-.title{text-align:center;margin-top:40px;}
-.title h1{font-size:36px;}
+.header a:hover{
+    color:#2563eb;
+}
+
+/* TITLE */
+
+.title{
+    text-align:center;
+    margin-top:30px;
+}
+
+.title h1{
+    font-size:26px;
+    margin-bottom:5px;
+}
+
+.title p{
+    color:#666;
+    font-size:14px;
+}
+
+/* GRID (VERTICAL CARD STYLE) */
 
 .grid{
-    width:50%;
+    max-width:700px;
     margin:40px auto;
     display:grid;
-    grid-template-columns:1fr; /* 🔥 stack vertically */
-    gap:25px;
+    grid-template-columns:1fr;
+    gap:18px;
+    padding:0 20px;
 }
 
-.box span{
-    position:relative;
-    z-index:2;
-    color:black;
+.grid a{
+    text-decoration:none;
 }
 
-.box:hover{
-    transform:scale(1.03);
-}
+/* CARD */
 
-.box{
-    height:220px; /* same as dashboard */
-    border-radius:12px;
-
+.grid-card{
     display:flex;
-    justify-content:center;
     align-items:center;
-
-    font-size:26px;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-
-    position:relative;
-    overflow:hidden;
+    gap:18px;
+    padding:18px;
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    transition:0.25s;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
-.notice{
-    background: url('assets/images/mail.jpg') center/cover no-repeat;
+.grid-card:hover{
+    transform:translateY(-3px);
+    border-color:#2563eb;
+    box-shadow:0 8px 18px rgba(0,0,0,0.08);
 }
 
-.guest{
-    background: url('assets/images/signature.jpg') center/cover no-repeat;
+/* ICON */
+
+.grid-icon{
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:10px;
 }
 
-.arrange{
-    background: url('assets/images/arrangement.webpg') center/cover no-repeat;
+/* TEXT */
+
+.grid-card span{
+    font-size:16px;
+    font-weight:600;
+    color:#333;
 }
+
+/* STATUS TITLE */
+
+.status-title{
+    text-align:center;
+    font-size:20px;
+    font-weight:600;
+    margin-top:50px;
+}
+
+/* STATUS GRID */
 
 .status-container{
-    width:60%;
-    margin:40px auto;
+    max-width:900px;
+    margin:30px auto;
+    display:grid;
+    gap:15px;
+    padding:0 20px;
 }
 
+/* STATUS CARD */
+
 .status-card{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:18px;
     background:white;
-    padding:20px;
-    border-radius:8px;
-    margin-top:15px;
 }
+
+/* BADGES */
+
+.status-text{
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    margin-left:5px;
+}
+
+.pending { background:#fff3cd; color:#856404; }
+.forwarded { background:#d1ecf1; color:#0c5460; }
+.approved { background:#d4edda; color:#155724; }
+.rejected { background:#f8d7da; color:#721c24; }
+
+/* REJECTION */
 
 .rejection-box{
     margin-top:10px;
-    padding:10px;
-    background:#fdecea;
-    border-left:4px solid red;
-    border-radius:5px;
-    color:#b71c1c;
+    padding:12px;
+    background:#fef2f2;
+    border:1px solid #fecaca;
+    border-radius:10px;
+    color:#b91c1c;
+    font-size:13px;
 }
 
+/* RESUBMIT */
+
 .resubmit-btn{
-    margin-top:10px;
-    padding:8px 15px;
-    background:#1976d2;
+    margin-top:12px;
+    padding:8px 14px;
+    background:#ef4444;
     color:white;
     border:none;
-    border-radius:5px;
+    border-radius:6px;
+    font-size:13px;
     cursor:pointer;
 }
 
 .resubmit-btn:hover{
-    background:#0d47a1;
+    background:#dc2626;
 }
+
 </style>
 
 </head>
@@ -187,31 +241,32 @@ body{
 <p>Select a category to submit a request</p>
 </div>
 
-<!-- <div class="grid">
-
-<a href="mass_email.php"><div class="box email">Mass Email</div></a>
-<a href="digital_signature.php"><div class="box signature">Digital Signature</div></a>
-<a href="smartboard.php"><div class="box smart">Smartboard Usage</div></a>
-
-</div> -->
-
 <div class="grid">
 
 <a href="mass_email.php">
-<div class="box notice"></div>
+    <div class="grid-card">
+        <img src="assets/images/MassEmail.png" class="grid-icon">
+        <span>Mass Email</span>
+    </div>
 </a>
 
 <a href="digital_signature.php">
-<div class="box guest"></div>
+    <div class="grid-card">
+        <img src="assets/images/digitalsign.png" class="grid-icon">
+        <span>Digital Signature</span>
+    </div>
 </a>
 
 <a href="smartboard.php">
-<div class="box arrange"></div>
+    <div class="grid-card">
+        <img src="assets/images/smartbor.png" class="grid-icon">
+        <span>Smartboard Usage</span>
+    </div>
 </a>
 
 </div>
 
-<h2 style="text-align:center;">Request Status</h2>
+<h2 class="status-title">Request Status</h2>
 
 <div class="status-container">
 
@@ -219,14 +274,13 @@ body{
 
 <div class="status-card">
 
-<h3><?php echo $label; ?></h3>
+<h3><?= $label; ?></h3>
 
 <?php if(isset($requests[$key])): ?>
 
 <?php
 $data = $requests[$key];
 
-/* 🔥 NEW FIX */
 $rejected = (
     $data['status'] == 'rejected' ||
     $data['admin_status'] == 'rejected'
@@ -255,12 +309,11 @@ elseif ($data['status'] == 'rejected') {
 ?>
 </p>
 
-<p>
+<p style="font-size:13px;color:#666;">
 <strong>Last Submitted:</strong><br>
 <?= $data['created_at']; ?>
 </p>
 
-<!-- 🔥 FIXED REJECTION REASON -->
 <?php if($rejected && !empty($data['rejection_reason'])): ?>
 <div class="rejection-box">
 <strong>Reason:</strong><br>
@@ -268,7 +321,6 @@ elseif ($data['status'] == 'rejected') {
 </div>
 <?php endif; ?>
 
-<!-- 🔥 FIXED RESUBMIT -->
 <?php if($rejected): ?>
 <a href="<?= $key ?>.php?resubmit=1&id=<?= $data['request_id'] ?>">
 <button class="resubmit-btn">Fix & Resubmit</button>
@@ -277,7 +329,7 @@ elseif ($data['status'] == 'rejected') {
 
 <?php else: ?>
 
-<p style="color:#777;">⚪ Not Submitted Yet</p>
+<p style="color:#999;font-size:13px;">⚪ Not Submitted Yet</p>
 
 <?php endif; ?>
 

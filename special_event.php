@@ -70,58 +70,134 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <style>
 
 body{
-    font-family: Arial;
+    font-family: Arial, Helvetica, sans-serif;
     margin:0;
-    background:#f2f2f2;
+    background:white;
 }
 
+/* HEADER */
+
 .header{
-    background: linear-gradient(to right,#6f1616,#a52a2a);
-    color:white;
-    padding:5px 40px;
+    background:white;
+    border-bottom:1px solid #e5e5e5;
+    padding:16px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
+.header h2{
+    margin:0;
+    font-size:18px;
+    color:#2563eb;
+    font-weight:600;
+}
+
 .header a{
-    color:white;
     text-decoration:none;
     margin-left:20px;
+    font-size:14px;
+    color:#555;
 }
+
+.header a:hover{
+    color:#2563eb;
+}
+
+/* PAGE */
 
 .page{
-    width:70%;
+    max-width:850px;
     margin:40px auto;
+    padding:0 20px;
 }
 
-.section{
-    background:white;
-    padding:25px;
-    margin-top:20px;
-    border-radius:8px;
+/* TITLE */
+
+h1{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:20px;
 }
+
+/* INFO BOX */
+
+.note{
+    background:#f9fafb;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:25px;
+    font-size:14px;
+    color:#444;
+    line-height:1.6;
+}
+
+/* UPLOAD BOX */
+
+.upload-box{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:18px;
+    background:white;
+    margin-bottom:18px;
+    transition:0.2s;
+}
+
+.upload-box:hover{
+    border-color:#2563eb;
+}
+
+.upload-box h3{
+    margin:0 0 10px;
+    font-size:15px;
+}
+
+/* FILE AREA */
+
+.file-wrapper{
+    border:1px dashed #d1d5db;
+    border-radius:10px;
+    padding:12px;
+    background:#f9fafb;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+}
+
+.file-wrapper input{
+    margin-top:6px;
+}
+
+/* BUTTON */
 
 button{
     margin-top:20px;
-    padding:10px 25px;
-    background:#1e1e1e;
+    padding:12px 22px;
+    background:#2563eb;
     color:white;
     border:none;
-    border-radius:5px;
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.2s;
 }
 
 button:hover{
-    background:black;
+    background:#1e4fd8;
+    transform:translateY(-1px);
 }
 
-.success{color:green;}
-.error{color:red;}
+/* MESSAGES */
 
-.note{
-    background:#fff3cd;
-    padding:15px;
-    border-left:5px solid #ffc107;
+.success{
+    color:#16a34a;
+    margin-bottom:10px;
+}
+
+.error{
+    color:#dc2626;
+    margin-bottom:10px;
 }
 
 </style>
@@ -141,57 +217,53 @@ button:hover{
 
 </div>
 
-
 <div class="page">
 
 <h1>Special Event Approval</h1>
 
-<div class="section note">
-<pre style="font-family:Poppins,sans-serif">
-Upload the following documents for events that involve:
+<div class="note">
+Upload the following documents for events that involve:<br><br>
 
-• Late night activities
-• Large crowds (more than 200 people)
-• Loud music or sound systems
-• College fests or large-scale events
+• Late night activities<br>
+• Large crowds (more than 200 people)<br>
+• Loud music or sound systems<br>
+• College fests or large-scale events<br><br>
 
-Required documents:
-
-• Letterhead explaining the event  
-• Event Approval Verification  
-• NOC Certificate
+<strong>Required documents:</strong><br>
+• Letterhead explaining the event<br>
+• Event Approval Verification<br>
+• NOC Certificate<br><br>
 
 Faculty will review the request before forwarding it to administration.
-</pre>
-
-
 </div>
 
 <?php if($success) echo "<p class='success'>$success</p>"; ?>
 <?php if($error) echo "<p class='error'>$error</p>"; ?>
 
-
 <form method="POST" enctype="multipart/form-data">
 
-<div class="section">
-
+<div class="upload-box">
 <h3>Letterhead</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="letterhead" required>
-
+</div>
 </div>
 
-<div class="section">
-
+<div class="upload-box">
 <h3>Event Approval Verification</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="event_approval" required>
-
+</div>
 </div>
 
-<div class="section">
-
+<div class="upload-box">
 <h3>NOC Certificate</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="noc_certificate" required>
-
+</div>
 </div>
 
 <button type="submit">Submit Request</button>

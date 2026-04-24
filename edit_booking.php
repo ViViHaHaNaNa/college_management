@@ -84,26 +84,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="container mt-5 mb-5">
-    <h2 class="mb-4 text-center">Edit Booking #<?= htmlspecialchars($booking_id) ?></h2>
+<div class="container mt-5 mb-5 pt-24">
+    <h2 class="mb-4 text-center text-3xl font-semibold text-gray-900">Edit Booking #<?= htmlspecialchars($booking_id) ?></h2>
 
     <?php if ($error): ?>
         <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
+<div class="max-w-lg mx-auto">
+    <form method="POST" class="space-y-5">
 
-    <form method="POST">
-
-        <div class="mb-3">
-            <label>Date</label>
+        <div>
+            <label class="block text-sm text-gray-600 mb-1">Date</label>
             <input type="date" name="date" id="dateInput"
-                   value="<?= $booking['booking_date'] ?>"
-                   min="<?= date('Y-m-d') ?>"
-                   class="form-control" required>
+                value="<?= $booking['booking_date'] ?>"
+                min="<?= date('Y-m-d') ?>"
+                class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                required>
         </div>
 
-        <div class="mb-3">
-            <label>Start Time</label>
-            <select name="start_time" id="startSelect" class="form-control" required>
+        <div>
+            <label class="block text-sm text-gray-600 mb-1">Start Time</label>
+            <select name="start_time" id="startSelect"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required>
                 <option value="">-- Select Start Time --</option>
                 <?php
                 $storedStart = date('H:i', strtotime($booking['start_time']));
@@ -118,30 +121,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </select>
         </div>
 
-        <div class="mb-3">
-            <label>End Time</label>
+        <div>
+            <label class="block text-sm text-gray-600 mb-1">End Time</label>
             <input type="time" name="end_time" id="endInput"
-                   value="<?= $booking['end_time'] ?>"
-                   class="form-control" readonly required>
+                value="<?= $booking['end_time'] ?>"
+                class="w-full px-3 py-2 rounded-lg border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                readonly required>
         </div>
 
-        <div class="mb-3">
-            <label>Space</label>
-            <select name="space_id" id="spaceSelect" class="form-control" required>
+        <div>
+            <label class="block text-sm text-gray-600 mb-1">Space</label>
+            <select name="space_id" id="spaceSelect"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required>
                 <option value="<?= $booking['space_id'] ?>">
                     <?= htmlspecialchars($booking['space_name']) ?> (Current)
                 </option>
             </select>
         </div>
 
-        <div class="mb-3">
-            <label>Reason</label>
-            <textarea name="reason" class="form-control" required><?= htmlspecialchars($booking['reason']) ?></textarea>
+        <div>
+            <label class="block text-sm text-gray-600 mb-1">Reason</label>
+            <textarea name="reason"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required><?= htmlspecialchars($booking['reason']) ?></textarea>
         </div>
 
-        <button class="btn btn-primary w-100">Update Booking</button>
+        <button class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-500 transition">
+            Update Booking
+        </button>
 
     </form>
+</div>
+
 </div>
 
 <script>

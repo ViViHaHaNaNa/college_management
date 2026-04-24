@@ -118,7 +118,9 @@ $query = "
 ";
 
 if (!empty($where)) {
-    $query .= " WHERE " . implode(' AND ', $where);
+    $query .= " WHERE b.status = 'booked' AND " . implode(' AND ', $where);
+} else {
+    $query .= " WHERE b.status = 'booked'";
 }
 
 $query .= "
@@ -144,175 +146,297 @@ $spaces = $conn->query("SELECT id, name FROM spaces ORDER BY name ASC");
 <style>
     /* COMMITTEE GRID */
 
-.committee-grid {
-    width: 60%;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    margin-bottom: 50px;
-}
+    .committee-grid {
+        width: 60%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+        margin-bottom: 50px;
+    }
 
-.committee-card {
-    background: white;
-    padding: 30px;
-    border-radius: 14px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: 0.3s;
-    position: relative;
-    overflow: hidden;
-}
+    .committee-card {
+        background: white;
+        padding: 30px;
+        border-radius: 14px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: 0.3s;
+        position: relative;
+        overflow: hidden;
+    }
 
-.committee-card::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    background: #a52a2a;
-    top: 0;
-    left: 0;
-}
+    .committee-card::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: #a52a2a;
+        top: 0;
+        left: 0;
+    }
 
-.committee-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
+    .committee-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
 
-.committee-logo {
-    max-width: 120px;
-    max-height: 80px;
-    object-fit: contain;
-}
+    .committee-logo {
+        max-width: 120px;
+        max-height: 80px;
+        object-fit: contain;
+    }
 
-/* Pending badge */
+    /* Pending badge */
 
-.pending-dot {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 12px;
-    height: 12px;
-    background: red;
-    border-radius: 50%;
-}
+    .pending-dot {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 12px;
+        height: 12px;
+        background: red;
+        border-radius: 50%;
+    }
 
-.pending-text {
-    margin-top: 10px;
-    font-size: 14px;
-    color: red;
-}
+    .pending-text {
+        margin-top: 10px;
+        font-size: 14px;
+        color: red;
+    }
 </style>
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">Admin Dashboard</h2>
+
+
 
 <!-- ================= COMMITTEE CARDS ================= -->
-<h3 class="mb-4">Committee paperwork</h3>
+<div class="pt-24 max-w-6xl mx-auto px-4">
 
+    <h2 class="text-3xl font-semibold text-center mb-8">Admin Dashboard</h2>
 
+    <!-- ================= COMMITTEE CARDS ================= -->
+    <h3 class="text-xl font-semibold mb-6 text-gray-800">Committee Paperwork</h3>
 
-<div class="committee-grid">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
 
-<?php while($row = $committee_result->fetch_assoc()): ?>
+    <?php while($row = $committee_result->fetch_assoc()): ?>
 
-<a href="admin_committee_view.php?committee_id=<?= urlencode($row['committee_id']) ?>" 
-   style="text-decoration:none;color:black;">
+        <a href="admin_committee_view.php?committee_id=<?= urlencode($row['committee_id']) ?>" 
+           class="no-underline text-gray-900">
 
-<div class="committee-card">
+            <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition p-6 text-center relative">
 
-<?php
-$cid = $row['committee_id'];
+                <?php
+                $cid = $row['committee_id'];
 
-$logos = [
-    "IETE-SF" => "assets/logos/IETE-SF.avif",
-    "MSC" => "assets/logos/msc.png",
-    "SPORTS COMMITTEE" => "assets/logos/sportscomm.jpeg"
-];
-?>
+                $logos = [
+                    "IETE-SF" => "assets/logos/IETE-SF.avif",
+                    "MSC" => "assets/logos/msc.png",
+                    "SPORTS COMMITTEE" => "assets/logos/sportscomm.jpeg",
+                    "STUDENT COUNCIL" => "assets/logos/stdcouncil.png"
+                ];
+                ?>
 
-<?php if(isset($logos[$cid])): ?>
-    <img src="<?= $logos[$cid] ?>" class="committee-logo">
-<?php else: ?>
-    <?= htmlspecialchars($cid) ?>
-<?php endif; ?>
+                <?php if(isset($logos[$cid])): ?>
+                    <img src="<?= $logos[$cid] ?>" 
+                         class="h-16 mx-auto mb-4 object-contain">
+                <?php else: ?>
+                    <div class="text-lg font-semibold mb-4">
+                        <?= htmlspecialchars($cid) ?>
+                    </div>
+                <?php endif; ?>
 
-<?php if ($row['pending_count'] > 0): ?>
-    <div class="pending-dot"></div>
-    <div class="pending-text">
-        <?= $row['pending_count'] ?> Pending
+                <?php if ($row['pending_count'] > 0): ?>
+                    <div class="absolute top-3 right-3 w-3 h-3 bg-red-500 rounded-full"></div>
+
+                    <div class="text-sm text-red-600 font-semibold mt-2">
+                        <?= $row['pending_count'] ?> Pending
+                    </div>
+                <?php else: ?>
+                    <div class="text-sm text-green-600 font-semibold mt-2">
+                        No Pending 
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </a>
+
+    <?php endwhile; ?>
+
     </div>
-<?php else: ?>
-    <div style="color:green; margin-top:10px; font-size:1rem;">
-        No Pending ✅
-    </div>
-<?php endif; ?>
-
-</div>
-</a>
-
-<?php endwhile; ?>
 
 </div>
 
 <!-- ================= BOOKINGS ================= -->
-<h3 class="mb-4 mt-5">All Bookings</h3>
+<h3 class="text-xl text-center font-semibold mt-8 mb-4 text-gray-800">All Bookings</h3>
 
-<table class="table table-bordered table-hover align-middle">
-    <thead class="table-light">
-        <tr>
-            <th>Booking ID</th>
-            <th>User</th>
-            <th>Email</th>
-            <th>Space</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Reason</th>
-            <th>Ticket</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="max-w-[1400px] mx-auto px-6 bg-white shadow-sm">
 
-    <?php if ($result->num_rows > 0): ?>
-        <?php while ($row = $result->fetch_assoc()) { ?>
+    <table class="w-full text-sm text-left">
+
+        <thead class="bg-gray-100 text-gray-700 uppercase text-xs w-full">
+            <tr class="<?= (isset($row['status']) && strtolower($row['status']) === 'cancelled') ? 'bg-red-100 border-l-4 border-red-500' : 'hover:bg-gray-50' ?>">
+                <th class="px-4 py-3 w-[70px]">ID</th>
+                <th class="px-4 py-3 w-[120px]">User</th>
+                <th class="px-4 py-3 w-[180px]">Email</th>
+                <th class="px-4 py-3 w-[120px]">Space</th>
+                <th class="px-4 py-3 w-[100px]">Type</th>
+                <th class="px-4 py-3 w-[110px]">Date</th>
+                <th class="px-4 py-3 w-[90px]">Start</th>
+                <th class="px-4 py-3 w-[90px]">End</th>
+                <th class="px-4 py-3 w-[120px]">Reason</th>
+                <th class="px-4 py-3 w-[90px]">Ticket</th>
+                <th class="px-4 py-3 w-[110px] text-center">Action</th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y">
+
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()) { ?>
+                <tr class="hover:bg-gray-50 transition">
+
+                    <td class="px-4 py-3 font-medium">#<?= $row['id'] ?></td>
+
+                    <td class="px-4 py-3 break-words">
+                        <?= htmlspecialchars($row['user_name']) ?>
+                    </td>
+
+                    <td class="px-4 py-3 text-gray-600 break-all">
+                        <?= htmlspecialchars($row['email']) ?>
+                    </td>
+
+                    <td class="px-4 py-3 break-words">
+                        <?= htmlspecialchars($row['space_name']) ?>
+                    </td>
+
+                    <td class="px-4 py-3">
+                        <span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded">
+                            <?= ucfirst($row['type']) ?>
+                        </span>
+                    </td>
+
+                    <td class="px-4 py-3"><?= $row['booking_date'] ?></td>
+                    <td class="px-4 py-3"><?= $row['start_time'] ?></td>
+                    <td class="px-4 py-3"><?= $row['end_time'] ?></td>
+
+                    <td class="px-4 py-3 text-gray-600 break-words">
+                        <?= htmlspecialchars($row['reason']) ?>
+                    </td>
+
+                    <td class="px-4 py-3">
+                        <a href="ticket.php?booking_id=<?= $row['id'] ?>" target="_blank"
+                           class="text-blue-600 border border-blue-600 px-2 py-1 rounded text-xs hover:bg-blue-50 transition">
+                            View
+                        </a>
+                    </td>
+
+                    <td class="px-4 py-3 text-center">
+                        <form method="POST" action="cancel_booking.php" class="inline-block">
+                            <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                            <button type="button"
+                                onclick="openCancelModal(<?= $row['id'] ?>)"
+                                class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-500 transition">
+                                Cancel
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            <?php } ?>
+        <?php else: ?>
             <tr>
-                <td>#<?= $row['id'] ?></td>
-                <td><?= htmlspecialchars($row['user_name']) ?></td>
-                <td><?= htmlspecialchars($row['email']) ?></td>
-                <td><?= htmlspecialchars($row['space_name']) ?></td>
-                <td><?= ucfirst($row['type']) ?></td>
-                <td><?= $row['booking_date'] ?></td>
-                <td><?= $row['start_time'] ?></td>
-                <td><?= $row['end_time'] ?></td>
-                <td><?= htmlspecialchars($row['reason']) ?></td>
-
-                <td>
-                    <a href="ticket.php?booking_id=<?= $row['id'] ?>" target="_blank" class="btn btn-sm btn-outline-primary">
-                        View Ticket
-                    </a>
-                </td>
-
-                <td>
-                    <form method="POST" action="cancel_booking.php">
-                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                        <button class="btn btn-sm btn-danger">Cancel</button>
-                    </form>
+                <td colspan="11" class="text-center py-6 text-gray-500">
+                    No bookings found.
                 </td>
             </tr>
-        <?php } ?>
-    <?php else: ?>
-        <tr><td colspan="11" class="text-center">No bookings found.</td></tr>
-    <?php endif; ?>
+        <?php endif; ?>
 
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
 </div>
+
+<div id="cancelModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl w-full max-w-md shadow-lg">
+
+        <h3 class="text-lg font-semibold mb-4">Cancel Booking</h3>
+
+        <textarea id="cancelReason"
+            class="w-full border border-gray-300 rounded-lg p-2 mb-4"
+            placeholder="Enter cancellation reason..."></textarea>
+
+        <div class="flex justify-end gap-3">
+            <button onclick="closeCancelModal()" class="px-4 py-2 border rounded-lg">
+                Cancel
+            </button>
+
+            <button onclick="submitCancel()" class="bg-red-600 text-white px-4 py-2 rounded-lg">
+                Confirm
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+let selectedBookingId = null;
+
+function openCancelModal(id) {
+    selectedBookingId = id;
+    document.getElementById('cancelModal').classList.remove('hidden');
+}
+
+function closeCancelModal() {
+    document.getElementById('cancelModal').classList.add('hidden');
+}
+
+function submitCancel() {
+    const reason = document.getElementById('cancelReason').value;
+    if (!reason) {
+        alert("Please enter a reason");
+        return;
+    }
+
+    // create form dynamically (same logic as before)
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'cancel_booking.php';
+
+    const idInput = document.createElement('input');
+    idInput.type = 'hidden';
+    idInput.name = 'id';
+    idInput.value = selectedBookingId;
+
+    const reasonInput = document.createElement('input');
+    reasonInput.type = 'hidden';
+    reasonInput.name = 'cancel_message';
+    reasonInput.value = reason;
+
+    form.appendChild(idInput);
+    form.appendChild(reasonInput);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
+
+
+<script>
+function getCancelReason(form) {
+    var reason = prompt("Enter reason for cancellation:");
+    if (!reason) return false;
+
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "cancel_message";  // ✅ FIXED
+    input.value = reason;
+
+    form.appendChild(input);
+    return true;
+}
+</script>
 
 <?php
 if (!defined('EMBED_MODE')) {

@@ -3,12 +3,12 @@ session_start();
 require 'includes/db_connect.php';
 
 // Auto-delete cancelled bookings older than 2 minutes
-$conn->query("
-    DELETE FROM bookings
-    WHERE status = 'cancelled'
-    AND cancelled_at IS NOT NULL
-    AND cancelled_at <= NOW() - INTERVAL 2 MINUTE
-");
+// $conn->query("
+//     DELETE FROM bookings
+//     WHERE status = 'cancelled'
+//     AND cancelled_at IS NOT NULL
+//     AND cancelled_at <= NOW() - INTERVAL 2 MINUTE
+// ");
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');

@@ -1,19 +1,45 @@
     </main>
 
-    <!-- <footer class="bg-dark text-white text-center py-3 fixed-bottom">
+    <!-- ================= GLOBAL FOOTER ================= -->
+<footer id="contact" class="bg-gray-900 text-gray-300 py-12 mt-20">
 
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
 
-        <p class="mb-0">&copy; <?= date("Y"); ?> Campus Space Booking System. All Rights Reserved.</p>
-    </footer>
+    <!-- Brand -->
+    <div>
+      <h2 class="text-xl font-bold text-white mb-3">CampusBook</h2>
+      <p class="text-sm text-gray-400">
+        Smart campus booking system for classrooms, libraries, and recreational spaces.
+      </p>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.js"></script> -->
+    <!-- Links -->
+    <div>
+      <h3 class="text-white font-semibold mb-3">Quick Links</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="book.php" class="hover:text-white transition">Book Space</a></li>
+        <li><a href="my_bookings.php" class="hover:text-white transition">My Bookings</a></li>
+        <li><a href="#spaces" class="hover:text-white transition">Explore</a></li>
+      </ul>
+    </div>
 
-    <footer class="bg-dark text-white text-center mt-5 py-4 custom-navbar">
-        <div class="container">
-            <p class="mb-0">&copy; <?= date('Y') ?> College Management</p>
-        </div>
-    </footer>
+    <!-- Contact -->
+    <div>
+      <h3 class="text-white font-semibold mb-3">Contact</h3>
+      <p class="text-sm text-gray-400">
+        support@campusbook.com<br>
+        +91 98765 43210
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="text-center text-gray-500 text-sm mt-10 border-t border-gray-700 pt-6">
+    © <?php echo date("Y"); ?> CampusBook. All rights reserved.
+  </div>
+
+</footer>
 
     <!-- Bootstrap JS -->
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

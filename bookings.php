@@ -3,12 +3,12 @@ include('includes/header.php');
 require 'includes/db_connect.php';
 
 // Auto-delete cancelled bookings older than 2 minutes
-$conn->query("
-    DELETE FROM bookings
-    WHERE status = 'cancelled'
-    AND cancelled_at IS NOT NULL
-    AND cancelled_at <= NOW() - INTERVAL 2 MINUTE
-");
+// $conn->query("
+//     DELETE FROM bookings
+//     WHERE status = 'cancelled'
+//     AND cancelled_at IS NOT NULL
+//     AND cancelled_at <= NOW() - INTERVAL 2 MINUTE
+// ");
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
@@ -85,9 +85,9 @@ $result = $stmt->get_result();
 ?>
 
 <main class="flex-grow-1">
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>My Bookings</h2>
+    <div class="pt-24 max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-3xl font-semibold text-gray-900">My Bookings</h2>
             <div id="reminderContainer"></div>
         </div>
 
@@ -106,39 +106,60 @@ $result = $stmt->get_result();
 
         <!-- ✅ FILTER FORM -->
         <form method="GET" class="row g-3 align-items-end mb-4">
+
             <div class="col-md-3">
-                <label class="form-label">Filter by Date</label>
-                <input type="date" name="filter_date" value="<?= htmlspecialchars($filter_date) ?>" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">Filter by Date</label>
+                <input type="date" name="filter_date"
+                    value="<?= htmlspecialchars($filter_date) ?>"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-3">
-                <label class="form-label">Filter by Space Name</label>
-                <input type="text" name="filter_space" value="<?= htmlspecialchars($filter_space) ?>" placeholder="e.g., Classroom 101" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">Filter by Space Name</label>
+                <input type="text" name="filter_space"
+                    value="<?= htmlspecialchars($filter_space) ?>"
+                    placeholder="e.g., Classroom 101"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-2">
-                <label class="form-label">Start Time (From)</label>
-                <input type="time" name="filter_start" value="<?= htmlspecialchars($filter_start) ?>" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">Start Time (From)</label>
+                <input type="time" name="filter_start"
+                    value="<?= htmlspecialchars($filter_start) ?>"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-2">
-                <label class="form-label">End Time (To)</label>
-                <input type="time" name="filter_end" value="<?= htmlspecialchars($filter_end) ?>" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">End Time (To)</label>
+                <input type="time" name="filter_end"
+                    value="<?= htmlspecialchars($filter_end) ?>"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-2 d-flex gap-2">
-                <button type="submit" class="btn btn-primary flex-grow-1">Apply</button>
-                <a href="bookings.php" class="btn btn-secondary">Clear</a>
+                <button type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition w-100">
+                    Apply
+                </button>
+
+                <a href="bookings.php"
+                class="border px-4 py-2 rounded-lg hover:bg-gray-100 transition text-center w-100">
+                    Clear
+                </a>
             </div>
+
         </form>
 
         <!-- ✅ Cancel Booking Section -->
         
 
-            <form action="cancel_booking.php" method="POST" class="row g-3 align-items-end cform">
-                <div class="col-md-6">
-                    <label class="form-label">Select Booking to Cancel</label>
-                    <select name="id" class="form-select" required>
+            <form action="cancel_booking.php" method="POST" class="row g-3 align-items-end mb-4 cform">
+
+                <div class="col-md-8">
+                    <label class="block text-sm text-gray-600 mb-1">Select Booking to Cancel</label>
+                    <select name="id" id="cancelSelect"
+                        class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                        required>
                         <option value="">-- Select Booking ID --</option>
                         <?php
                         $res2 = $conn->query("
@@ -154,12 +175,15 @@ $result = $stmt->get_result();
                         ?>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary"
-                            onclick="return confirm('Are you sure you want to cancel this booking?');">
-                        Cancel Selected Booking
-                    </button>
+
+                <div class="col-md-4">
+                    <button type="submit"
+    class="w-100 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition"
+    id="openCancel">
+    Cancel Selected Booking
+</button>
                 </div>
+
             </form>
         
 
@@ -199,7 +223,7 @@ $result = $stmt->get_result();
                         }
                     ?>
 
-                    <div class="booking-row p-4 mb-3 rounded shadow-sm">
+                    <div class="booking-row p-4 mb-3 rounded shadow-sm" data-id="<?= $row['id'] ?>">
 
                         <div class="row align-items-center">
 
@@ -329,9 +353,43 @@ $result = $stmt->get_result();
         <?php endif; ?>
 
     </div>
+
+<div id="cancelModal" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.2);
+align-items:center;
+justify-content:center;
+z-index:999;
+">
+
+<div style="
+background:white;
+padding:25px;
+border-radius:12px;
+width:320px;
+text-align:center;
+">
+
+<h5>Cancel Booking?</h5>
+<p>Are you sure you want to cancel?</p>
+
+<div style="margin-top:15px; display:flex; justify-content:center; gap:10px;">
+<button onclick="closeModal()" class="btn btn-outline-dark">No</button>
+<button onclick="confirmCancel()" class="btn btn-danger">Yes</button>
+</div>
+
+</div>
+</div>
+
 </main>
 
 <script>
+
 // Auto-hide success alerts after 5 seconds
 setTimeout(() => {
     document.querySelectorAll('.alert-success').forEach(alert => {
@@ -339,6 +397,42 @@ setTimeout(() => {
         bsAlert.close();
     });
 }, 5000);
-</script>
 
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const form = document.querySelector(".cform");
+
+    form.addEventListener("submit", function(e){
+
+        e.preventDefault(); // stop submit
+
+        const id = document.getElementById("cancelSelect").value;
+
+        if(!id){
+            alert("Select a booking first");
+            return;
+        }
+
+        window.cancelId = id;
+
+        document.getElementById("cancelModal").style.display = "flex";
+
+    });
+
+});
+
+function closeModal(){
+    document.getElementById("cancelModal").style.display = "none";
+}
+
+function confirmCancel(){
+
+    const form = document.querySelector(".cform");
+
+    form.submit(); // 🔥 REAL submit → PHP → reload
+
+}
+
+</script>
 <?php include('includes/footer.php'); ?>

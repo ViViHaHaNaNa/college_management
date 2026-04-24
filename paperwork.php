@@ -55,58 +55,63 @@ $percent = ($completed / $total) * 100;
 a{
     text-decoration:none;
 }
+/* GRID */
 .grid-container{
-    width:75%;
-    margin:40px auto;
+    max-width:1100px;
+    margin:50px auto;
     display:grid;
     grid-template-columns:repeat(2,1fr);
-    gap:30px;
+    gap:25px;
+    padding:0 20px;
 }
 
-.grid-box{
-    height:220px;
-    border-radius:12px;
+/* CARD */
+.grid-card{
+    background:white;
+    border-radius:16px;
+    padding:28px;
     display:flex;
-    justify-content:center;
+    flex-direction:column;
     align-items:center;
-    font-size:28px;
-    color:white;
-    font-weight:bold;
+    justify-content:center;
+    gap:12px;
     cursor:pointer;
-    transition:0.3s;
-
-    background-size:contain;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-color:white;
-
-    position:relative;
-    overflow:hidden;
+    transition:0.25s;
+    border:1px solid #eee;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
 
-.grid-box::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.45);
-    z-index:1;
+/* ICON */
+.grid-icon{
+    width:65px;
+    height:65px;
+    object-fit:contain;
 }
 
-.grid-box span{
-    position:relative;
-    z-index:2;
+/* TEXT */
+.grid-card span{
+    font-size:16px;
+    font-weight:600;
+    color:#333;
+    text-align:center;
 }
 
-.paperwork{background-image:url('assets/images/report.jpg');}
-.logistical{background-image:url('assets/images/approval.png');}
-.general{background-image:url('assets/images/budget.png');}
-.datetime{background-image:url('assets/images/reimbursement.png');}
+/* HOVER */
+.grid-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
 
-.grid-box:hover{
-    transform:scale(1.05);
+/* REMOVE LINK UNDERLINE */
+.grid-container a{
+    text-decoration:none;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .grid-container{
+        grid-template-columns:1fr;
+    }
 }
 
 
@@ -216,111 +221,179 @@ body{font-family: Arial;margin:0;background:#f2f2f2;}
     background:#0d47a1;
 }
 </style>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="header">
-<h2>Committee Paperwork</h2>
-<div>
-<a href="committee_dashboard.php">Dashboard</a>
-<a href="logout.php">Logout</a>
-</div>
+<div class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm">
+
+    <!-- Title -->
+    <h2 class="text-lg font-semibold text-gray-800">
+        Committee Paperwork
+    </h2>
+
+    <!-- Nav -->
+    <div class="flex items-center gap-4 text-sm font-medium">
+
+        <a href="committee_dashboard.php"
+           class="text-gray-600 hover:text-blue-600 transition">
+            Dashboard
+        </a>
+
+        <a href="logout.php"
+           class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500 transition">
+            Logout
+        </a>
+
+    </div>
+
 </div>
 
-<div class="title">
-<h1>Paperwork Submissions</h1>
-<p>Select a category to submit documents</p>
+<div class="text-center mt-10 mb-6">
+
+    <h1 class="text-2xl font-semibold text-gray-800">
+        Paperwork Submissions
+    </h1>
+
+    <p class="text-sm text-gray-500 mt-1">
+        Select a category to submit documents
+    </p>
+
 </div>
 
-<div class="progress-container">
-<h3>Paperwork Completion</h3>
-<div class="progress-bar">
-<div class="progress-fill" style="width:<?= $percent; ?>%;"></div>
-</div>
-<p><?= $completed; ?> / <?= $total; ?> Submitted</p>
+<div class="w-full max-w-5xl mx-auto mt-8 px-4">
+
+    <div class="flex justify-between items-center mb-2">
+        <h3 class="text-sm font-semibold text-gray-700">
+            Paperwork Completion
+        </h3>
+
+        <span class="text-xs text-gray-500">
+            <?= $completed; ?> / <?= $total; ?> Submitted
+        </span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+        <div class="h-full bg-green-600 transition-all duration-300"
+             style="width:<?= $percent; ?>%;"></div>
+    </div>
+
 </div>
 
 <div class="grid-container">
 
-<a href="annual_report.php"><div class="grid-box paperwork"><span>Annual / Quarterly Report</span></div></a>
-<a href="event_approval.php"><div class="grid-box logistical"><span>Event Approval</span></div></a>
-<a href="budget_sanction.php"><div class="grid-box general"><span>Budget Sanctionment</span></div></a>
-<a href="reimbursment.php"><div class="grid-box datetime"><span>Reimbursment</span></div></a>
+    <a href="annual_report.php">
+        <div class="grid-card">
+            <img src="assets/images/report.jpg" class="grid-icon">
+            <span>Annual / Quarterly Report</span>
+        </div>
+    </a>
+
+    <a href="event_approval.php">
+        <div class="grid-card">
+            <img src="assets/images/approval.png" class="grid-icon">
+            <span>Event Approval</span>
+        </div>
+    </a>
+
+    <a href="budget_sanction.php">
+        <div class="grid-card">
+            <img src="assets/images/budget.png" class="grid-icon">
+            <span>Budget Sanctionment</span>
+        </div>
+    </a>
+
+    <a href="reimbursment.php">
+        <div class="grid-card">
+            <img src="assets/images/reimbursement.png" class="grid-icon">
+            <span>Reimbursment</span>
+        </div>
+    </a>
 
 </div>
 
 
 
 
-<h2 style="text-align:center;">Submission Status</h2>
+<h2 class="text-center text-xl font-semibold text-gray-800 mt-10 mb-6">
+    Submission Status
+</h2>
 
-<div class="status-grid">
+<div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-5 px-4">
 
 <?php foreach($categories as $key => $label): ?>
 
-<div class="status-card">
+<div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
 
-<h3><?= $label; ?></h3>
+    <!-- Title -->
+    <h3 class="text-md font-semibold text-gray-800 mb-3">
+        <?= $label; ?>
+    </h3>
 
-<?php if(isset($submissions[$key])): ?>
+    <?php if(isset($submissions[$key])): ?>
 
-<?php
-$data = $submissions[$key];
+    <?php
+    $data = $submissions[$key];
 
-/* 🔥 FIX */
-$rejected = (
-    $data['status'] == 'rejected' ||
-    $data['admin_status'] == 'rejected'
-);
-?>
+    $rejected = (
+        $data['status'] == 'rejected' ||
+        $data['admin_status'] == 'rejected'
+    );
+    ?>
 
-<p><strong>Status:</strong>
+    <!-- STATUS BADGE -->
+    <div class="mb-3">
+        <?php
+        if ($data['forwarded_to_admin'] == 1 && $data['admin_status'] == 'pending') {
+            echo "<span class='inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full'>Forwarded to Admin</span>";
+        }
+        elseif ($data['admin_status'] == 'approved') {
+            echo "<span class='inline-block bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full'>Approved by Admin</span>";
+        }
+        elseif ($data['admin_status'] == 'rejected') {
+            echo "<span class='inline-block bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full'>Rejected by Admin</span>";
+        }
+        elseif ($data['status'] == 'pending') {
+            echo "<span class='inline-block bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-full'>Pending (Faculty Review)</span>";
+        }
+        elseif ($data['status'] == 'rejected') {
+            echo "<span class='inline-block bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full'>Rejected by Faculty</span>";
+        }
+        ?>
+    </div>
 
-<?php
-if ($data['forwarded_to_admin'] == 1 && $data['admin_status'] == 'pending') {
-    echo "<span class='status-text forwarded'>Forwarded to Admin</span>";
-}
-elseif ($data['admin_status'] == 'approved') {
-    echo "<span class='status-text approved'>Approved by Admin</span>";
-}
-elseif ($data['admin_status'] == 'rejected') {
-    echo "<span class='status-text rejected'>Rejected by Admin</span>";
-}
-elseif ($data['status'] == 'pending') {
-    echo "<span class='status-text pending'>Pending (Faculty Review)</span>";
-}
-elseif ($data['status'] == 'rejected') {
-    echo "<span class='status-text rejected'>Rejected by Faculty</span>";
-}
-?>
+    <!-- META INFO -->
+    <p class="text-xs text-gray-500 mb-3">
+        Last Submitted: <?= $data['uploaded_at']; ?>
+    </p>
 
-</p>
+    <!-- REJECTION BLOCK -->
+    <?php if($rejected && !empty($data['rejection_reason'])): ?>
+    <div class="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg p-3 mb-3">
+        <strong>Reason:</strong><br>
+        <?= htmlspecialchars($data['rejection_reason']) ?>
+    </div>
+    <?php endif; ?>
 
-<p><strong>Last Submitted:</strong><br>
-<?= $data['uploaded_at']; ?>
-</p>
+    <!-- ACTION -->
+    <?php if($rejected): ?>
+    <a href="<?= $key ?>.php?resubmit=1&id=<?= $data['paperwork_id'] ?>"
+       class="inline-flex items-center gap-1 text-red-600 text-sm font-medium hover:underline">
+        Fix & Resubmit →
+    </a>
+    <?php endif; ?>
 
-<!-- 🔥 FIXED REASON -->
-<?php if($rejected && !empty($data['rejection_reason'])): ?>
-<div class="rejection-box">
-<strong>Reason:</strong><br>
-<?= htmlspecialchars($data['rejection_reason']) ?>
-</div>
-<?php endif; ?>
+    <?php else: ?>
 
-<!-- 🔥 FIXED RESUBMIT -->
-<?php if($rejected): ?>
-<a href="<?= $key ?>.php?resubmit=1&id=<?= $data['paperwork_id'] ?>">
-<button class="resubmit-btn">Fix & Resubmit</button>
-</a>
-<?php endif; ?>
+    <!-- EMPTY STATE -->
+    <p class="text-gray-400 text-sm">
+        ⚪ Not Submitted Yet
+    </p>
 
-<?php else: ?>
-
-<p style="color:#777;">⚪ Not Submitted Yet</p>
-
-<?php endif; ?>
+    <?php endif; ?>
 
 </div>
 

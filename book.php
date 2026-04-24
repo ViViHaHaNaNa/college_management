@@ -165,79 +165,110 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </div> -->
 
-<div class="container mt-5">
-    <h2>Book a Space</h2>
 
-    <?php if (!empty($success)): ?>
-        <div class="alert alert-success text-center"><?= htmlspecialchars($success) ?></div>
-    <?php elseif (!empty($error)): ?>
-        <div class="alert alert-danger text-center"><?= htmlspecialchars($error) ?></div>
-    <?php endif; ?>
+<div class="pt-24 min-h-screen flex items-start justify-center bg-white relative">
 
-    <form method="POST" id="bookingForm" class="mt-3">
+    <!-- Background glow -->
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-100 via-white to-blue-50 opacity-50 blur-3xl"></div>
 
-        <!-- 1️⃣ Date FIRST -->
-        <div class="mb-3">
-            <label class="form-label">Date</label>
-            <input type="date" name="date" class="form-control" id="dateInput" required 
-                   min="<?= date('Y-m-d') ?>" value="<?= htmlspecialchars($_POST['date'] ?? '') ?>">
-        </div>
+    <div class="relative z-10 w-full max-w-2xl bg-white shadow-xl rounded-2xl p-8">
 
-        <!-- 2️⃣ Time SECOND -->
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label">Start Time</label>
-                <select name="start_time" id="startSelect" class="form-control" required>
-                    <option value="">-- Select Start Time --</option>
-                    <?php
-                    for ($h = 6; $h <= 17; $h++) {
-                        $t = str_pad($h, 2, '0', STR_PAD_LEFT) . ':00';
-                        $selected = (isset($_POST['start_time']) && $_POST['start_time'] === $t) ? 'selected' : '';
-                        echo "<option value=\"$t\" $selected>$t</option>";
-                    }
-                    ?>
+        <!-- Heading FIXED -->
+        <h2 class="text-3xl font-bold mb-6 text-center">Book a Space</h2>
+
+        <?php if (!empty($success)): ?>
+            <div class="bg-green-100 text-green-600 px-4 py-2 rounded mb-4 text-sm text-center">
+                <?= htmlspecialchars($success) ?>
+            </div>
+        <?php elseif (!empty($error)): ?>
+            <div class="bg-red-100 text-red-600 px-4 py-2 rounded mb-4 text-sm text-center">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" id="bookingForm" class="space-y-5">
+
+            <!-- Date -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Date</label>
+                <input type="date" name="date" id="dateInput"
+                    class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required min="<?= date('Y-m-d') ?>"
+                    value="<?= htmlspecialchars($_POST['date'] ?? '') ?>">
+            </div>
+
+            <!-- Time -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Start Time</label>
+                    <select name="start_time" id="startSelect"
+                        class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                        required>
+                        <option value="">-- Select Start Time --</option>
+                        <?php
+                        for ($h = 6; $h <= 17; $h++) {
+                            $t = str_pad($h, 2, '0', STR_PAD_LEFT) . ':00';
+                            $selected = (isset($_POST['start_time']) && $_POST['start_time'] === $t) ? 'selected' : '';
+                            echo "<option value=\"$t\" $selected>$t</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">End Time</label>
+                    <input type="time" name="end_time" id="endInput"
+                        class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                        required readonly
+                        value="<?= htmlspecialchars($_POST['end_time'] ?? '') ?>">
+                </div>
+            </div>
+
+            <!-- Space Type -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Select Type</label>
+                <select id="spaceType" name="space_type"
+                    class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required disabled>
+                    <option value="">-- Select Type --</option>
+                    <option value="classroom" <?= ($type === 'classroom') ? 'selected' : '' ?>>Classroom</option>
+                    <option value="library" <?= ($type === 'library') ? 'selected' : '' ?>>Library</option>
+                    <option value="cafeteria" <?= ($type === 'Cafeteria') ? 'selected' : '' ?>>Canteen</option>
+                    <option value="Recreation" <?= ($type === 'Recreation') ? 'selected' : '' ?>>Game Room</option>
+                    <option value="lab" <?= ($type === 'Lab') ? 'selected' : '' ?>>Lab</option>
                 </select>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label class="form-label">End Time</label>
-                <input type="time" name="end_time" id="endInput" class="form-control" 
-                       required readonly value="<?= htmlspecialchars($_POST['end_time'] ?? '') ?>">
+            <!-- Space -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Select Space</label>
+                <select id="spaceSelect" name="space_id"
+                    class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required disabled>
+                    <option value="">-- Select Space --</option>
+                </select>
             </div>
-        </div>
 
-        <!-- 3️⃣ Space Type THIRD -->
-        <div class="mb-3">
-            <label class="form-label">Select Type</label>
-            <select id="spaceType" name="space_type" class="form-control" required disabled>
-                <option value="">-- Select Type --</option>
-                <option value="classroom" <?= ($type === 'classroom') ? 'selected' : '' ?>>Classroom</option>
-                <option value="library" <?= ($type === 'library') ? 'selected' : '' ?>>Library</option>
-                <option value="cafeteria" <?= ($type === 'Cafeteria') ? 'selected' : '' ?>>Canteen</option>
-                <option value="Recreation" <?= ($type === 'Recreation') ? 'selected' : '' ?>>Game Room</option>
-                <option value="lab" <?= ($type === 'Lab') ? 'selected' : '' ?>>Lab</option>
-            </select>
-        </div>
+            <!-- Reason -->
+            <div>
+                <label class="block text-sm text-gray-600 mb-1">Reason for Booking</label>
+                <textarea name="reason"
+                    class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                    required maxlength="200"
+                    placeholder="Enter reason"><?= htmlspecialchars($_POST['reason'] ?? '') ?></textarea>
+            </div>
 
-        <!-- 4️⃣ Space FOURTH -->
-        <div class="mb-3">
-            <label class="form-label">Select Space</label>
-            <select id="spaceSelect" name="space_id" class="form-control" required disabled>
-                <option value="">-- Select Space --</option>
-            </select>
-        </div>
+            <!-- Button -->
+            <button type="submit"
+                class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-500 transition">
+                Book Now
+            </button>
 
-        <!-- 5️⃣ Reason LAST -->
-        <div class="mb-3">
-            <label class="form-label">Reason for Booking</label>
-            <textarea name="reason" class="form-control" required maxlength="200" 
-                      placeholder="Enter reason"><?= htmlspecialchars($_POST['reason'] ?? '') ?></textarea>
-        </div>
+        </form>
 
-        <button type="submit" class="btn btn-primary w-100 mb-60">Book Now</button>
-
-    </form>
+    </div>
 </div>
+
 
 <script>
 

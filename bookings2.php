@@ -1,4 +1,5 @@
 <?php
+include('includes/header.php');
 require 'includes/db_connect.php';
 
 // Auto-delete cancelled bookings older than 2 minutes
@@ -83,365 +84,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 ?>
 
-<style>
-
-    
-body {
-    background-color: white;
-    font-family: 'Poppins', sans-serif;
-}
-
-
-.navbar {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* ===== NAVBAR ===== */
-.custom-navbar {
-    background: linear-gradient(to right, #6f1616, #a52a2a);
-}
-
-
-.card {
-    background-color: #ffffff;
-}
-
-.cform{
-    margin-bottom:1rem;
-}
-
-.btn {
-    border-radius: 8px;
-    padding: 8px 16px;
-    font-weight: 500;
-    color: black;
-}
-
- .btn-primary {
-    background-color: #c9a227;
-    color: black;
-} 
-
-
-h1, h2, h3 {
-    font-family: 'Playfair Display', serif;
-}
-/* .btn-primary {
-    background-color: #0069d9;
-    border: none;
-    transition: 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #0053b3;
-} */
-
-.dashboard-title {
-    color: black;
-    font-weight: 600;
-}
-
-.dashboard-divider {
-    border-top: 2px solid #8B1E1E;
-    width: 60px;
-    margin: 10px auto 30px auto;
-}
-
-/* Horizontal layout */
-.booking-container {
-    display: flex;
-    flex-wrap: wrap;          /* allows new row after 3 */
-    justify-content: center;  /* center align */
-    gap: 20px;
-}
-
-/* Each card */
-.booking-card {
-    background: white;
-    width: 300px;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    border-top: 4px solid #8B1E1E;
-    transition: transform 0.2s ease;
-}
-
-.booking-card:hover {
-    transform: translateY(-5px);
-}
-
-.booking-line {
-    margin-bottom: 8px;
-}
-
-.booking-date {
-    font-weight: 600;
-    font-size: 16px;
-}
-
-.booking-time {
-    font-weight: 500;
-}
-
-.booking-space {
-    color: #555;
-}
-
-.booking-countdown {
-    margin-top: 5px;
-}
-
-
-.card {
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-
-form {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-
-
-
-.space-card {
-    margin-bottom: 20px;
-}
-
-.space-card .card-title {
-    font-weight: 600;
-}
-
-
-.alert {
-    border-radius: 10px;
-}
-
-.text-muted-small {
-    font-size: 0.9rem;
-    color: #6c757d;
-}
-
-
-
-
-
-.card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-.card-img-overlay {
-    transition: background 0.3s ease;
-}
-.card:hover .card-img-overlay {
-    background: rgba(0,0,0,0.6);
-}
-
-/* ---------- FOOTER + MAIN FIX ---------- */
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-main {
-    flex: 1 0 auto; /* pushes footer to bottom naturally */
-}
-
-footer {
-    flex-shrink: 0;
-    background-color: #03090e;
-    color: #fff;
-    text-align: center;
-    padding: 15px 0;
-    width: 100%;
-    position: relative;
-    z-index: 1; /* prevents overlap */
-}
-
-
-/* Carousel */
-
-
-
-#spaceCarousel .carousel-caption {
-    bottom: 30px;      /* controls how far from bottom */
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-
-
-.feature-img {
-    max-width: 80%;
-}
-
-
-/* Center caption vertically */
-.carousel-caption {
-    top: 60%;
-    bottom: auto;
-    transform: translateY(-50%);
-}
-
-/* Glassmorphism box */
-.glass-box {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(0.5px);
-    -webkit-backdrop-filter: blur(0.5px);
-
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 20px;
-
-    padding: 10px 10px;
-    max-width: 600px;
-
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-}
-
-/* Improve text visibility */
-.glass-box h5,
-.glass-box p {
-    color: white;
-    text-shadow: 0 3px 10px rgba(0,0,0,0.6);
-}
-
-/* New Bookings */
-
-.booking-row {
-    border-left: 5px solid #ff3b3b;  /* 🔴 RED ACCENT */
-    border-radius: 12px;
-    transition: all 0.25s ease;
-}
-
-.booking-row:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(255, 59, 59, 0.2);
-}
-
-.booking-meta .badge {
-    background-color: #50f000;
-    border: 1px solid #ff3b3b;
-}
-
-.btn-group-custom .btn {
-    margin-left: 8px;
-}
-
-.layout-btn {
-    background: #ff3b3b;
-    border: none;
-}
-
-.layout-btn:hover {
-    background: #ff1f1f;
-}
-
-/* Modal container */
-.custom-modal {
-    border-radius: 18px;
-    border: none;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-}
-
-/* Header styling */
-.custom-modal-header {
-    background: #ffffff;
-    border-bottom: 1px solid #eee;
-    padding: 1.2rem 1.5rem;
-}
-
-/* Dark title text */
-.custom-modal-header .modal-title {
-    color: #222;   /* Dark text */
-}
-
-/* Body spacing */
-.modal-body {
-    padding: 2rem;
-    background: #fafafa;
-}
-
-/* Floor plan image styling */
-.modal-body img {
-    max-height: 75vh;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-/* Optional: slight red accent line */
-.custom-modal-header {
-    border-top: 4px solid #dc3545; /* Bootstrap red */
-}
-
-.booking-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.booking-actions .btn {
-    min-width: 85px;
-    border-radius: 8px;
-    padding: 6px 14px;
-}
-
-/* Make locate visually primary */
-.booking-actions .btn-danger {
-    background-color: #dc3545;
-    border: none;
-}
-
-.booking-actions .btn-danger:hover {
-    background-color: #c82333;
-}
-
-.cancelled-row {
-    background-color: #ffe5e5 !important;
-    opacity: 0.9;
-}
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">Campus Space Booking</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <?php if(isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item"><a class="nav-link" href="book.php">Book Space</a></li>
-                        <li class="nav-item"><a class="nav-link" href="committee_dashbaord.php">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-                    <?php else: ?>
-                        <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="signup.php">Signup</a></li>
-                    <?php endif; ?>
-                    <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
 <main class="flex-grow-1">
-    <div class="container mt-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>My Bookings</h2>
+    <div class="pt-24 max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-3xl font-semibold text-gray-900">My Bookings</h2>
             <div id="reminderContainer"></div>
         </div>
 
@@ -460,39 +106,60 @@ footer {
 
         <!-- ✅ FILTER FORM -->
         <form method="GET" class="row g-3 align-items-end mb-4">
+
             <div class="col-md-3">
-                <label class="form-label">Filter by Date</label>
-                <input type="date" name="filter_date" value="<?= htmlspecialchars($filter_date) ?>" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">Filter by Date</label>
+                <input type="date" name="filter_date"
+                    value="<?= htmlspecialchars($filter_date) ?>"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-3">
-                <label class="form-label">Filter by Space Name</label>
-                <input type="text" name="filter_space" value="<?= htmlspecialchars($filter_space) ?>" placeholder="e.g., Classroom 101" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">Filter by Space Name</label>
+                <input type="text" name="filter_space"
+                    value="<?= htmlspecialchars($filter_space) ?>"
+                    placeholder="e.g., Classroom 101"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-2">
-                <label class="form-label">Start Time (From)</label>
-                <input type="time" name="filter_start" value="<?= htmlspecialchars($filter_start) ?>" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">Start Time (From)</label>
+                <input type="time" name="filter_start"
+                    value="<?= htmlspecialchars($filter_start) ?>"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-2">
-                <label class="form-label">End Time (To)</label>
-                <input type="time" name="filter_end" value="<?= htmlspecialchars($filter_end) ?>" class="form-control">
+                <label class="block text-sm text-gray-600 mb-1">End Time (To)</label>
+                <input type="time" name="filter_end"
+                    value="<?= htmlspecialchars($filter_end) ?>"
+                    class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm">
             </div>
 
             <div class="col-md-2 d-flex gap-2">
-                <button type="submit" class="btn btn-primary flex-grow-1">Apply</button>
-                <a href="bookings.php" class="btn btn-secondary">Clear</a>
+                <button type="submit"
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition w-100">
+                    Apply
+                </button>
+
+                <a href="bookings.php"
+                class="border px-4 py-2 rounded-lg hover:bg-gray-100 transition text-center w-100">
+                    Clear
+                </a>
             </div>
+
         </form>
 
         <!-- ✅ Cancel Booking Section -->
         
 
-            <form action="cancel_booking.php" method="POST" class="row g-3 align-items-end cform">
-                <div class="col-md-6">
-                    <label class="form-label">Select Booking to Cancel</label>
-                    <select name="id" class="form-select" required>
+            <form action="cancel_booking.php" method="POST" class="row g-3 align-items-end mb-4 cform">
+
+                <div class="col-md-8">
+                    <label class="block text-sm text-gray-600 mb-1">Select Booking to Cancel</label>
+                    <select name="id"
+                        class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                        required>
                         <option value="">-- Select Booking ID --</option>
                         <?php
                         $res2 = $conn->query("
@@ -508,12 +175,15 @@ footer {
                         ?>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-primary"
-                            onclick="return confirm('Are you sure you want to cancel this booking?');">
+
+                <div class="col-md-4">
+                    <button type="submit"
+                        class="w-100 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition"
+                        onclick="return confirm('Are you sure you want to cancel this booking?');">
                         Cancel Selected Booking
                     </button>
                 </div>
+
             </form>
         
 

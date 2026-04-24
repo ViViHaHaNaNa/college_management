@@ -98,18 +98,181 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <title>Reimbursement Request</title>
 
 <style>
-body{font-family:Arial;margin:0;background:#f2f2f2;}
-select{margin-top:10px;padding:8px;width:250px;}
-.header{background:linear-gradient(to right,#6f1616,#a52a2a);color:white;padding:18px 40px;display:flex;justify-content:space-between;}
-.header a{color:white;text-decoration:none;margin-left:20px;}
-.page{width:75%;margin:40px auto;}
-.section{background:white;padding:25px;margin-top:20px;border-radius:8px;}
-.back-btn{background:#6f1616;color:white;padding:8px 15px;border-radius:5px;text-decoration:none;}
-button{margin-top:20px;padding:10px 25px;background:#1e1e1e;color:white;border:none;border-radius:5px;}
-button:hover{background:black;}
-.success{color:green;}
-.error{color:red;}
-.note{background:#fff3cd;padding:15px;margin-top:10px;border-left:5px solid #ffc107;}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    background:white;
+}
+
+/* HEADER */
+
+.header{
+    background:white;
+    border-bottom:1px solid #e5e5e5;
+    padding:16px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.header h2{
+    margin:0;
+    font-size:18px;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.header a{
+    text-decoration:none;
+    margin-left:20px;
+    font-size:14px;
+    color:#555;
+}
+
+.header a:hover{
+    color:#2563eb;
+}
+
+/* PAGE */
+
+.page{
+    max-width:850px;
+    margin:40px auto;
+    padding:0 20px;
+}
+
+/* BACK */
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:20px;
+    text-decoration:none;
+    color:#2563eb;
+    font-size:14px;
+}
+
+.back-btn:hover{
+    text-decoration:underline;
+}
+
+/* TITLE */
+
+h1{
+    font-size:26px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+/* SECTION */
+
+.section{
+    background:#f9fafb;
+    padding:18px 20px;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+    margin-bottom:20px;
+}
+
+/* INPUT */
+
+input[type=number]{
+    margin-top:10px;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    width:200px;
+}
+
+/* NOTE */
+
+.note{
+    margin-top:12px;
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    color:#92400e;
+    padding:12px;
+    border-radius:10px;
+    font-size:13px;
+}
+
+/* UPLOAD BOX */
+
+.upload-box{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:16px;
+    background:white;
+    margin-bottom:18px;
+    transition:0.2s;
+}
+
+.upload-box:hover{
+    border-color:#2563eb;
+}
+
+.upload-box h3{
+    margin:0 0 8px;
+    font-size:15px;
+}
+
+/* FILE AREA */
+
+.file-wrapper{
+    border:1px dashed #d1d5db;
+    border-radius:10px;
+    padding:12px;
+    background:#f9fafb;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+}
+
+.file-wrapper input{
+    margin-top:6px;
+}
+
+/* SELECT */
+
+select{
+    margin-top:10px;
+    padding:10px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    width:250px;
+}
+
+/* BUTTON */
+
+button{
+    margin-top:25px;
+    padding:12px 24px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    background:#1e4fd8;
+    transform:translateY(-1px);
+}
+
+/* MESSAGES */
+
+.success{
+    color:#16a34a;
+    margin-bottom:10px;
+}
+
+.error{
+    color:#dc2626;
+    margin-bottom:10px;
+}
+
 </style>
 
 <script>
@@ -153,43 +316,67 @@ function updateLetterheadNote(){
 
 <form method="POST" enctype="multipart/form-data">
 
+<!-- AMOUNT -->
 <div class="section">
-<label>Reimbursement Amount (₹)</label>
+<label>Reimbursement Amount (₹)</label><br>
 <input type="number" id="amount" name="amount" oninput="updateLetterheadNote()" required>
+
 <div id="letterhead_note" class="note">
 Enter reimbursement amount to see letterhead instructions.
 </div>
 </div>
 
-<div class="section">
+<!-- FILES -->
+
+<div class="upload-box">
 <h3>Letterhead</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="letterhead" required>
 </div>
+</div>
 
-<div class="section">
+<div class="upload-box">
 <h3>Event Approval Verification</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="approval" required>
 </div>
+</div>
 
-<div class="section">
+<div class="upload-box">
 <h3>Event Report</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="event_report" required>
 </div>
+</div>
 
-<div class="section">
+<div class="upload-box">
 <h3>Actual Bills</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="bills" required>
 </div>
+</div>
 
-<div class="section">
+<div class="upload-box">
 <h3>Payment Proofs</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="payment_proofs" required>
 </div>
+</div>
 
-<div class="section">
+<div class="upload-box">
 <h3>Statement of Expenses</h3>
+<div class="file-wrapper">
+Select file<br>
 <input type="file" name="expense_statement" required>
 </div>
+</div>
+
+<!-- SELECT -->
 
 <div class="section">
 <h3>Transfer Account Details</h3>

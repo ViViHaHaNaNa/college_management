@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('includes/header.php');
 require 'includes/db_connect.php';
 
 
@@ -126,7 +127,6 @@ foreach ($queries as $q) {
 body {
     font-family: 'Segoe UI', sans-serif;
     margin:0;
-    background: linear-gradient(135deg,#eef2f7,#f8f9fb);
 }
 
 /* HEADER */
@@ -264,115 +264,143 @@ body {
 
 <body>
 
-<div class="header">
-<h2>Admin Panel</h2>
-<div>
-<a href="admin_dashboard.php">Dashboard</a>
-<a href="logout.php">Logout</a>
-</div>
-</div>
+<!-- <div class="header">
+    <h2>Admin Panel</h2>
+    <div>
+    <a href="admin_dashboard.php">Dashboard</a>
+    <a href="logout.php">Logout</a>
+    </div>
+</div> -->
 
-<div class="container">
+<div class="pt-24 max-w-5xl mx-auto px-4">
 
-<h2>Committee: <?= htmlspecialchars($committee_id) ?></h2>
+    <h2 class="text-2xl font-semibold mb-6">
+        Committee: <?= htmlspecialchars($committee_id) ?>
+    </h2>
 
-<?php foreach ($all_requests as $req): ?>
+    <?php foreach ($all_requests as $req): ?>
 
-<div class="card">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-5 mb-6">
 
-<h3><?= $req['category'] ?> - <?= ucfirst(str_replace("_"," ",$req['type'])) ?></h3>
+        <h3 class="text-lg font-semibold mb-2">
+            <?= $req['category'] ?> - <?= ucfirst(str_replace("_"," ",$req['type'])) ?>
+        </h3>
 
-<p><strong>Status:</strong>
+        <p class="mb-3">
+            <strong>Status:</strong>
 
-<?php
-if ($req['forwarded_to_admin'] == 1 && $req['admin_status'] == 'pending') {
-    echo "<span class='status forwarded'>Forwarded</span>";
-}
-elseif ($req['admin_status'] == 'approved') {
-    echo "<span class='status approved'>Approved</span>";
-}
-elseif ($req['admin_status'] == 'rejected') {
-    echo "<span class='status rejected'>Rejected</span>";
-}
-else {
-    echo "<span class='status pending'>Pending</span>";
-}
-?>
+            <?php
+            if ($req['forwarded_to_admin'] == 1 && $req['admin_status'] == 'pending') {
+                echo "<span class='inline-block ml-2 px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded'>Forwarded</span>";
+            }
+            elseif ($req['admin_status'] == 'approved') {
+                echo "<span class='inline-block ml-2 px-2 py-1 text-xs bg-green-100 text-green-700 rounded'>Approved</span>";
+            }
+            elseif ($req['admin_status'] == 'rejected') {
+                echo "<span class='inline-block ml-2 px-2 py-1 text-xs bg-red-100 text-red-700 rounded'>Rejected</span>";
+            }
+            else {
+                echo "<span class='inline-block ml-2 px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded'>Pending</span>";
+            }
+            ?>
+        </p>
 
-</p>
+        <?php $docs = getDocuments($conn, $req['category'], $req['type'], $committee_id); ?>
 
-<?php $docs = getDocuments($conn, $req['category'], $req['type'], $committee_id); ?>
+        <div class="border border-gray-200 rounded-lg p-4 mb-4">
+            <strong class="block mb-2 text-sm text-gray-700">Documents</strong>
 
-<div class="doc-box">
-<strong>Documents</strong>
+            <?php if (!empty($docs)): ?>
+                <?php foreach ($docs as $d): ?>
+                    <div class="flex justify-between items-center py-2 border-b last:border-none">
 
-<?php if (!empty($docs)): ?>
-<?php foreach ($docs as $d): ?>
-<div class="doc-row">
-<span><?= ucfirst(str_replace("_"," ",$d['document_type'])) ?></span>
-<div class="doc-actions">
-<a href="<?= $d['file_path'] ?>" target="_blank" class="view">View</a>
-<a href="<?= $d['file_path'] ?>" download class="download">Download</a>
-</div>
-</div>
-<?php endforeach; ?>
-<?php else: ?>
-<p style="color:#777;">No documents</p>
-<?php endif; ?>
-</div>
+                        <span class="text-sm text-gray-700">
+                            <?= ucfirst(str_replace("_"," ",$d['document_type'])) ?>
+                        </span>
 
-<?php if ($req['forwarded_to_admin'] == 1 && $req['admin_status'] == 'pending'): ?>
+                        <div class="flex gap-2">
+                            <a href="<?= $d['file_path'] ?>" target="_blank"
+                               class="text-blue-600 text-xs border border-blue-600 px-2 py-1 rounded hover:bg-blue-50 transition">
+                                View
+                            </a>
 
-<div style="margin-top:15px;">
-<form method="POST" action="admin_action.php" style="display:inline;">
-<input type="hidden" name="committee_id" value="<?= $committee_id ?>">
-<input type="hidden" name="type" value="<?= $req['type'] ?>">
-<input type="hidden" name="category" value="<?= $req['category'] ?>">
-<button type="submit" name="action" value="approve" class="action-btn approve-btn">Approve</button>
-</form>
+                            <a href="<?= $d['file_path'] ?>" download
+                               class="text-gray-700 text-xs border border-gray-300 px-2 py-1 rounded hover:bg-gray-100 transition">
+                                Download
+                            </a>
+                        </div>
 
-<button class="action-btn reject-btn"
-onclick="openModal('<?= $req['category'] ?>','<?= $req['type'] ?>')">
-Reject
-</button>
-</div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="text-sm text-gray-400">No documents</p>
+            <?php endif; ?>
+        </div>
 
-<?php endif; ?>
+        <?php if ($req['forwarded_to_admin'] == 1 && $req['admin_status'] == 'pending'): ?>
 
-</div>
+        <div class="flex gap-3 mt-3">
 
-<?php endforeach; ?>
+            <form method="POST" action="admin_action.php">
+                <input type="hidden" name="committee_id" value="<?= $committee_id ?>">
+                <input type="hidden" name="type" value="<?= $req['type'] ?>">
+                <input type="hidden" name="category" value="<?= $req['category'] ?>">
+
+                <button type="submit" name="action" value="approve"
+                        class="bg-green-600 text-white px-4 py-2 rounded-md text-sm hover:bg-green-500 transition">
+                    Approve
+                </button>
+            </form>
+
+            <button class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-500 transition"
+                    onclick="openModal('<?= $req['category'] ?>','<?= $req['type'] ?>')">
+                Reject
+            </button>
+
+        </div>
+
+        <?php endif; ?>
+
+    </div>
+
+    <?php endforeach; ?>
 
 </div>
 
 <!-- MODAL -->
-<div id="rejectModal" class="modal">
-<div class="modal-content">
+<div id="rejectModal" class="hidden fixed inset-0 flex items-center justify-center z-50">
 
-<h3>Reject Request</h3>
+    <div class="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
 
-<form method="POST" action="admin_action.php">
+        <h3 class="text-lg font-semibold mb-4">Reject Request</h3>
 
-<input type="hidden" name="committee_id" value="<?= $committee_id ?>">
-<input type="hidden" name="category" id="modalCategory">
-<input type="hidden" name="type" id="modalType">
-<input type="hidden" name="action" value="reject">
+        <form method="POST" action="admin_action.php">
 
-<input type="text" name="reason" placeholder="Enter rejection reason" required>
+            <input type="hidden" name="committee_id" value="<?= $committee_id ?>">
+            <input type="hidden" name="category" id="modalCategory">
+            <input type="hidden" name="type" id="modalType">
+            <input type="hidden" name="action" value="reject">
 
-<br><br>
+            <input type="text" name="reason"
+                   class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"
+                   placeholder="Enter rejection reason" required>
 
-<button type="submit" class="action-btn reject-btn">
-Confirm Reject
-</button>
+            <div class="flex justify-end gap-3 mt-4">
+                <button type="submit"
+                        class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-500 transition">
+                    Confirm Reject
+                </button>
 
-<button type="button" onclick="closeModal()" style="margin-left:10px;">
-Cancel
-</button>
+                <button type="button"
+                        onclick="closeModal()"
+                        class="px-4 py-2 border rounded-md text-sm hover:bg-gray-100">
+                    Cancel
+                </button>
+            </div>
 
-</form>
+        </form>
 
-</div>
+    </div>
 </div>
 
 <script>

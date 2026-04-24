@@ -45,52 +45,121 @@ $categories = [
 <title>Date & Time Specific Requests</title>
 
 <style>
+
+/* STATUS BADGES */
+
 .status-text {
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 6px;
-    display: inline-block;
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:20px;
+    display:inline-block;
 }
 
-.pending { background: #fff3cd; color: #856404; }
-.forwarded { background: #d1ecf1; color: #0c5460; }
-.approved { background: #d4edda; color: #155724; }
-.rejected { background: #f8d7da; color: #721c24; }
+.pending { background:#fff3cd; color:#856404; }
+.forwarded { background:#d1ecf1; color:#0c5460; }
+.approved { background:#d4edda; color:#155724; }
+.rejected { background:#f8d7da; color:#721c24; }
 
-body{font-family: Arial;margin:0;background:#f2f2f2;}
+/* BODY */
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    background:white;
+}
+
+/* HEADER */
 
 .header{
-    background: linear-gradient(to right,#6f1616,#a52a2a);
-    color:white;
-    padding:5px 40px;
+    background:white;
+    border-bottom:1px solid #e5e5e5;
+    padding:16px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
 }
 
-.header a{color:white;text-decoration:none;margin-left:20px;}
-
-a{
-    text-decoration:none;
+.header h2{
+    margin:0;
+    font-size:18px;
+    color:#2563eb;
 }
-.title{text-align:center;margin-top:40px;}
+
+.header a{
+    text-decoration:none;
+    margin-left:20px;
+    font-size:14px;
+    color:#555;
+}
+
+.header a:hover{
+    color:#2563eb;
+}
+
+/* TITLE */
+
+.title{
+    text-align:center;
+    margin-top:30px;
+}
+
+.title h1{
+    font-size:26px;
+    margin-bottom:5px;
+}
+
+.title p{
+    font-size:14px;
+    color:#666;
+}
+
+/* GRID */
 
 .grid{
-    width:75%;
-    margin:40px auto;
+    max-width:600px; /* 🔥 smaller */
+    margin:30px auto;
     display:grid;
-    grid-template-columns:1fr; /* 🔥 stack vertically */
-    gap:25px;
+    grid-template-columns:1fr;
+    gap:16px;
+    padding:0 20px;
 }
 
-.box span{
+.grid a{
+    text-decoration:none;
+}
+
+/* IMAGE CARD */
+
+.box{
+    height:140px; /* 🔥 smaller */
+    border-radius:14px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:18px; /* 🔥 reduced */
+    font-weight:600;
+    color:white;
+
+    cursor:pointer;
+    transition:0.25s;
+
+    background-size:cover;
+    background-position:center;
+
     position:relative;
-    z-index:2;
-    color:white; /* 🔥 important */
+    overflow:hidden;
+
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
+
 .box:hover{
-    transform:scale(1.03);
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.12);
 }
+
+/* DARK OVERLAY */
 
 .box::before{
     content:"";
@@ -99,78 +168,83 @@ a{
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.45); /* 🔥 overlay */
-    z-index:1;
+    background:rgba(0,0,0,0.45);
 }
 
-.box{
-    height:220px; /* same as dashboard */
-    border-radius:12px;
+/* TEXT */
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:26px;
-    color:white;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-
+.box span{
     position:relative;
-    overflow:hidden;
+    z-index:2;
 }
+
+/* IMAGES */
 
 .notice{
-    background: url('assets/images/classroom.jpg') center/cover no-repeat;
+    background:url('assets/images/classroom.jpg') center/cover no-repeat;
 }
 
 .guest{
-    background: url('assets/images/refuge.jpeg') center/cover no-repeat;
+    background:url('assets/images/refuge.jpeg') center/cover no-repeat;
 }
 
 .arrange{
-    background: url('assets/images/special.jpeg') center/cover no-repeat;
+    background:url('assets/images/special.jpeg') center/cover no-repeat;
+}
+
+/* STATUS */
+
+.status-title{
+    text-align:center;
+    font-size:20px;
+    margin-top:40px;
 }
 
 .status-container{
-    width:60%;
-    margin:40px auto;
+    max-width:800px;
+    margin:25px auto;
+    padding:0 20px;
+    display:grid;
+    gap:15px;
 }
 
+/* CARD */
+
 .status-card{
+    border:1px solid #e5e7eb;
+    border-radius:14px;
+    padding:18px;
     background:white;
-    padding:20px;
-    border-radius:8px;
-    margin-top:15px;
 }
+
+/* REJECTION */
 
 .rejection-box{
     margin-top:10px;
-    padding:10px;
-    background:#fdecea;
-    border-left:4px solid red;
-    border-radius:5px;
-    color:#b71c1c;
+    padding:12px;
+    background:#fef2f2;
+    border:1px solid #fecaca;
+    border-radius:10px;
+    color:#b91c1c;
+    font-size:13px;
 }
 
+/* BUTTON */
+
 .resubmit-btn{
-    margin-top:10px;
-    padding:8px 15px;
-    background:#1976d2;
+    margin-top:12px;
+    padding:8px 14px;
+    background:#ef4444;
     color:white;
     border:none;
-    border-radius:5px;
+    border-radius:6px;
     cursor:pointer;
 }
 
 .resubmit-btn:hover{
-    background:#0d47a1;
+    background:#dc2626;
 }
+
 </style>
 
 </head>
@@ -190,10 +264,7 @@ a{
 <p>Submit permissions for areas and special events</p>
 </div>
 
-
-
-<div class="grid">
-
+<!-- 🔥 FIXED GRID (removed duplicate wrapper) -->
 <div class="grid">
 
 <a href="book.php">
@@ -216,9 +287,7 @@ a{
 
 </div>
 
-</div>
-
-<h2 style="text-align:center;">Request Status</h2>
+<h2 class="status-title">Request Status</h2>
 
 <div class="status-container">
 
@@ -233,7 +302,6 @@ a{
 <?php
 $data = $requests[$key];
 
-/* 🔥 FINAL FIX */
 $rejected = (
     $data['status'] == 'rejected' ||
     $data['admin_status'] == 'rejected'
@@ -262,11 +330,11 @@ elseif ($data['status'] == 'rejected') {
 
 </p>
 
-<p><strong>Last Submitted:</strong><br>
+<p style="font-size:13px;color:#666;">
+<strong>Last Submitted:</strong><br>
 <?= $data['created_at']; ?>
 </p>
 
-<!-- 🔥 FIXED REASON -->
 <?php if($rejected && !empty($data['rejection_reason'])): ?>
 <div class="rejection-box">
 <strong>Reason:</strong><br>
@@ -274,7 +342,6 @@ elseif ($data['status'] == 'rejected') {
 </div>
 <?php endif; ?>
 
-<!-- 🔥 FIXED RESUBMIT -->
 <?php if($rejected): ?>
 
 <?php
@@ -292,7 +359,7 @@ $pageMap = [
 
 <?php else: ?>
 
-<p style="color:#777;">⚪ Not Submitted Yet</p>
+<p style="color:#999;font-size:13px;">⚪ Not Submitted Yet</p>
 
 <?php endif; ?>
 

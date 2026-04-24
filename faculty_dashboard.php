@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('includes/header.php');
 require 'includes/db_connect.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'faculty') {
@@ -26,7 +27,7 @@ ORDER BY committee_id
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    margin:0;
+    margin:20;
     background:#f4f6f9;
 }
 
@@ -102,7 +103,7 @@ body{
 
 .inquiry-container{
     width:70%;
-    margin:auto;
+    margin:0 auto;
 }
 
 /* CARD */
@@ -121,6 +122,9 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
+}
+.inquiry-card:last-child {
+    margin-bottom: 0;
 }
 
 .badge{
@@ -196,111 +200,161 @@ button:hover{
 
 </head>
 
-<body>
+<body class="bg-white">
 
-<div class="header">
-<h2>Faculty Panel</h2>
-<div>
-<a href="faculty_dashboard.php">Dashboard</a>
-<a href="logout.php">Logout</a>
-</div>
-</div>
+<header class="absolute top-0 left-0 w-full z-50">
+  <div class="w-full px-6 py-4 flex items-center justify-between bg-white shadow-sm border-b border-gray-200">
+
+    <!-- Logo -->
+    <a href="faculty_dashboard.php" class="text-2xl font-bold text-blue-600 hover:opacity-80 transition">
+      College Management
+    </a>
+
+    <!-- Nav -->
+    <nav class="hidden md:flex items-center gap-8 text-gray-700 font-medium">
+
+      <a href="faculty_dashboard.php" class="hover:text-blue-600 transition">
+        Dashboard
+      </a>
+
+      <a href="bookings.php" class="hover:text-blue-600 transition">
+        Bookings
+      </a>
+
+    </nav>
+
+    <!-- RIGHT SIDE -->
+    <div class="flex items-center gap-3">
+
+      <!-- Logout (kept your button style but adjusted to match theme) -->
+      <a href="logout.php"
+         class="bg-red-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-red-500 transition">
+        Logout
+      </a>
+
+    </div>
+
+  </div>
+</header>
+
+<div class="pt-28 bg-white min-h-screen">
+
+    <div class="max-w-6xl mx-auto px-6">
 
 
-<div class="page-title">
-<h1>Committees</h1>
-<p>Select a committee to view submissions</p>
-</div>
+    <div class="page-title">
+    <h1>Committees</h1>
+    <p>Select a committee to view submissions</p>
+    </div>
 
 <div class="committee-grid">
 
-<?php while($c = $committees->fetch_assoc()): ?>
+    <?php while($c = $committees->fetch_assoc()): ?>
 
-<a href="committee_view.php?committee_id=<?php echo urlencode($c['committee_id']); ?>">
+    <a href="committee_view.php?committee_id=<?php echo urlencode($c['committee_id']); ?>">
 
-<div class="committee-card">
+    <div class="committee-card">
 
-<?php
-$cid = $c['committee_id'];
+    <?php
+    $cid = $c['committee_id'];
 
-$logos = [
-    "IETE-SF" => "assets/logos/IETE-SF.avif",
-    "MSC" => "assets/logos/msc.png",
-    "SPORTS COMMITTEE" => "assets/logos/sportscomm.jpeg"
-];
+    $logos = [
+        "IETE-SF" => "assets/logos/IETE-SF.avif",
+        "MSC" => "assets/logos/msc.png",
+        "SPORTS COMMITTEE" => "assets/logos/sportscomm.jpeg",
+        "STUDENT COUNCIL" => "assets/logos/stdcouncil.png"
+    ];
 
-if(isset($logos[$cid])): ?>
+    if(isset($logos[$cid])): ?>
 
-<img src="<?php echo $logos[$cid]; ?>" class="committee-logo">
+    <img src="<?php echo $logos[$cid]; ?>" class="committee-logo">
 
-<?php else: ?>
+    <?php else: ?>
 
-<?php echo htmlspecialchars($cid); ?>
+    <?php echo htmlspecialchars($cid); ?>
 
-<?php endif; ?>
+    <?php endif; ?>
 
-</div>
+    </div>
 
-</a>
+    </a>
 
-<?php endwhile; ?>
-
-</div>
-
-
-<div class="page-title">
-<h1>Committee Queries</h1>
-</div>
-
-
-<div class="inquiry-container">
-
-<?php
-
-$result = $conn->query("
-SELECT inquiries.*, users.first_name, users.last_name
-FROM inquiries
-JOIN users ON inquiries.committee_id = users.committee_id
-WHERE inquiries.status = 'pending'
-");
-
-if ($result && $result->num_rows > 0):
-
-while($row = $result->fetch_assoc()):
-?>
-
-<div class="inquiry-card">
-
-<div class="inquiry-header">
-<strong>Committee: <?php echo htmlspecialchars($row['committee_id']); ?></strong>
-<span class="badge">New Query</span>
-</div>
-
-<p class="query-text">
-<?php echo htmlspecialchars($row['message']); ?>
-</p>
-
-<form action="reply_inquiry.php" method="POST">
-
-<input type="hidden" name="inquiry_id" value="<?php echo $row['inquiry_id']; ?>">
-
-<textarea name="reply" placeholder="Write response..." required></textarea>
-
-<button type="submit">Send Reply</button>
-
-</form>
+    <?php endwhile; ?>
 
 </div>
 
-<?php endwhile; else: ?>
 
-<div class="no-inquiries">
-No committee queries at the moment.
+<div class="page-title mt-10">
+    <h1>Committee Queries</h1>
 </div>
 
-<?php endif; ?>
+
+    <div class="inquiry-container mb-0">
+
+    <?php
+
+    $result = $conn->query("
+    SELECT inquiries.*, users.first_name, users.last_name
+    FROM inquiries
+    JOIN users ON inquiries.committee_id = users.committee_id
+    WHERE inquiries.status = 'pending'
+    ");
+
+    if ($result && $result->num_rows > 0):
+
+        while($row = $result->fetch_assoc()):
+        ?>
+
+        <div class="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+
+        <div class="flex justify-between items-center mb-2">
+            <strong class="text-sm text-gray-800">
+                Committee: <?php echo htmlspecialchars($row['committee_id']); ?>
+            </strong>
+
+            <span class="bg-blue-100 text-blue-700 text-[11px] px-2 py-0.5 rounded">
+                New
+            </span>
+        </div>
+
+        <p class="text-sm text-gray-600 mb-3">
+            <?php echo htmlspecialchars($row['message']); ?>
+        </p>
+
+        <form action="reply_inquiry.php" method="POST" class="flex items-center gap-2">
+
+            <input type="hidden" name="inquiry_id" value="<?php echo $row['inquiry_id']; ?>">
+
+            <textarea name="reply"
+                class="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-1 focus:ring-blue-500 outline-none resize-none h-10"
+                placeholder="Reply..." required></textarea>
+
+            <button type="submit"
+                class="bg-red-600 text-white px-3 py-2 rounded-md text-xs hover:bg-red-500 transition">
+                Send
+            </button>
+
+        </form>
+
+    </div>
+
+        <?php endwhile; else: ?>
+
+        <div class="no-inquiries">
+        No committee queries at the moment.
+        </div>
+
+    <?php endif; ?>
+
+    </div>
 
 </div>
+
+    </div>
+
+</div>
+
+
 
 </body>
 </html>
