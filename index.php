@@ -128,11 +128,11 @@ body { font-family: 'Inter', sans-serif; }
 
       <div class="mt-8 flex gap-10 animate-fadeUp" style="animation-delay:0.6s;">
         <div>
-          <h3 class="text-3xl font-bold text-blue-600">50</h3>
+          <h3 class="text-3xl font-bold text-blue-600">50+</h3>
           <p class="text-gray-500 text-sm">Classrooms</p>
         </div>
         <div>
-          <h3 class="text-3xl font-bold text-blue-600">30</h3>
+          <h3 class="text-3xl font-bold text-blue-600">3</h3>
           <p class="text-gray-500 text-sm">Library Pods</p>
         </div>
         <div>

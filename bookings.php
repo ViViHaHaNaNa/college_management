@@ -51,8 +51,9 @@ if ($filter_date !== '') {
 }
 
 if ($filter_space !== '') {
-    $query .= " AND s.name LIKE ?";
-    $types .= "s";
+    $query .= " AND (s.name LIKE ? OR s.type LIKE ?)";
+    $types .= "ss";
+    $params[] = "%$filter_space%";
     $params[] = "%$filter_space%";
 }
 

@@ -334,7 +334,7 @@ $spaces = $conn->query("SELECT id, name FROM spaces ORDER BY name ASC");
                     </td>
 
                     <td class="px-4 py-3 text-center">
-                        <form method="POST" action="cancel_booking.php" class="inline-block">
+                        <form method="POST" action="cancel_booking.php" class="inline-block bg-transparent p-0 shadow-none border-none">
                             <input type="hidden" name="id" value="<?= $row['id'] ?>">
                             <button type="button"
                                 onclick="openCancelModal(<?= $row['id'] ?>)"

@@ -339,21 +339,23 @@ body {
 
         <?php if ($req['forwarded_to_admin'] == 1 && $req['admin_status'] == 'pending'): ?>
 
-        <div class="flex gap-3 mt-3">
+        <div class="flex gap-3 mt-3 items-center">
 
-            <form method="POST" action="admin_action.php">
+            <form method="POST" action="admin_action.php"
+      class="inline-block bg-transparent p-0 shadow-none border-none">
                 <input type="hidden" name="committee_id" value="<?= $committee_id ?>">
                 <input type="hidden" name="type" value="<?= $req['type'] ?>">
                 <input type="hidden" name="category" value="<?= $req['category'] ?>">
 
                 <button type="submit" name="action" value="approve"
-                        class="bg-green-600 text-white px-4 py-2 rounded-md text-sm hover:bg-green-500 transition">
+                    class="w-32 h-11 bg-green-600 text-white rounded-md text-sm hover:bg-green-500 transition flex items-center justify-center">
                     Approve
                 </button>
             </form>
 
-            <button class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-500 transition"
-                    onclick="openModal('<?= $req['category'] ?>','<?= $req['type'] ?>')">
+            <button
+                class="w-32 h-11 bg-red-600 text-white rounded-md text-sm hover:bg-red-500 transition flex items-center justify-center"
+                onclick="openModal('<?= $req['category'] ?>','<?= $req['type'] ?>')">
                 Reject
             </button>
 
